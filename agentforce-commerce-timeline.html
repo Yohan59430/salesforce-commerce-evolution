@@ -124,20 +124,21 @@ body {
 .mini-label { font-size: 10.5px; color: rgba(255,255,255,0.68); text-align: center; max-width: 64px; line-height: 1.3; }
 
 /* Progressive scale: small at 2016, large at 2026 */
-.mini-timeline .mini-node:nth-child(1) .mini-year,
-.mini-timeline .mini-node:nth-child(1) .mini-label { font-size: 8px; }
+/* nth-child offset by 1 because .tl-callout is the first child in .mini-timeline */
 .mini-timeline .mini-node:nth-child(2) .mini-year,
-.mini-timeline .mini-node:nth-child(2) .mini-label { font-size: 9px; }
+.mini-timeline .mini-node:nth-child(2) .mini-label { font-size: 8px; }
 .mini-timeline .mini-node:nth-child(3) .mini-year,
-.mini-timeline .mini-node:nth-child(3) .mini-label { font-size: 9.5px; }
+.mini-timeline .mini-node:nth-child(3) .mini-label { font-size: 9px; }
 .mini-timeline .mini-node:nth-child(4) .mini-year,
-.mini-timeline .mini-node:nth-child(4) .mini-label { font-size: 10.5px; }
+.mini-timeline .mini-node:nth-child(4) .mini-label { font-size: 9.5px; }
 .mini-timeline .mini-node:nth-child(5) .mini-year,
-.mini-timeline .mini-node:nth-child(5) .mini-label { font-size: 11.5px; }
+.mini-timeline .mini-node:nth-child(5) .mini-label { font-size: 10.5px; }
 .mini-timeline .mini-node:nth-child(6) .mini-year,
-.mini-timeline .mini-node:nth-child(6) .mini-label { font-size: 12.5px; }
+.mini-timeline .mini-node:nth-child(6) .mini-label { font-size: 11.5px; }
 .mini-timeline .mini-node:nth-child(7) .mini-year,
-.mini-timeline .mini-node:nth-child(7) .mini-label { font-size: 14px; font-weight: 500; }
+.mini-timeline .mini-node:nth-child(7) .mini-label { font-size: 12.5px; }
+.mini-timeline .mini-node:nth-child(8) .mini-year,
+.mini-timeline .mini-node:nth-child(8) .mini-label { font-size: 14px; font-weight: 500; }
 
 /* ─────────────── SHARED ─────────────── */
 .section-inner { max-width: 880px; margin: 0 auto; padding: 72px 64px; }
