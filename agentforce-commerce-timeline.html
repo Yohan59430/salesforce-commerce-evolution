@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Salesforce Agentforce Commerce Cloud — Platform Evolution 2016–2026</title>
-<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;600;700;800;900&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;600;700;800;900&family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
 <style>
 *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
 
@@ -398,6 +398,209 @@ footer p { font-size: 12px; color: var(--ink-3); }
 @media (prefers-reduced-motion: reduce) {
   .tab-panel.active { animation: none; }
 }
+
+/* ─────────────── SCROLL REVEAL ─────────────── */
+.sr {
+  opacity: 0;
+  transform: translateY(28px);
+  transition: opacity 0.6s cubic-bezier(.22,1,.36,1),
+              transform 0.6s cubic-bezier(.22,1,.36,1);
+}
+.sr.visible { opacity: 1; transform: none; }
+.sr-d1 { transition-delay: 0.10s; }
+.sr-d2 { transition-delay: 0.20s; }
+.sr-d3 { transition-delay: 0.30s; }
+.sr-d4 { transition-delay: 0.40s; }
+
+/* ─────────────── COMPARISON ANIMATIONS ─────────────── */
+/* Breathing glow on Agentforce side */
+@keyframes breathe {
+  0%, 100% { opacity: 0.72; }
+  50%       { opacity: 1;    }
+}
+.cv-right::before { animation: breathe 5s   ease-in-out infinite; }
+.cv-right::after  { animation: breathe 7s   ease-in-out infinite 2s; }
+
+/* Panel slide-in */
+.cv-left.cva  { opacity: 0; transform: translateX(-36px);
+  transition: opacity 0.7s cubic-bezier(.22,1,.36,1),
+              transform 0.7s cubic-bezier(.22,1,.36,1); }
+.cv-axis.cva  { opacity: 0; transition: opacity 0.45s ease 0.30s; }
+.cv-right.cva { opacity: 0; transform: translateX(36px);
+  transition: opacity 0.7s cubic-bezier(.22,1,.36,1) 0.12s,
+              transform 0.7s cubic-bezier(.22,1,.36,1) 0.12s; }
+.cv-left.cva.visible,
+.cv-right.cva.visible { opacity: 1; transform: none; }
+.cv-axis.cva.visible  { opacity: 1; }
+
+/* Row cascade */
+.cv-row.cva-row {
+  opacity: 0; transform: translateY(8px);
+  transition: opacity 0.38s ease, transform 0.38s ease, background 0.2s ease;
+}
+.cv-row.cva-row.visible { opacity: 1; transform: none; }
+
+/* Linked row hover */
+.cv-left  .cv-row.row-hi { background: rgba(0,0,0,0.05); }
+.cv-right .cv-row.row-hi { background: rgba(255,255,255,0.06); }
+.cv-axis  .cv-row.row-hi { background: rgba(255,255,255,0.08); }
+.cv-axis  .cv-row .cv-arrow { transition: color 0.18s ease, transform 0.18s ease; }
+.cv-axis  .cv-row.row-hi .cv-arrow {
+  color: rgba(255,255,255,0.95) !important;
+  transform: translateX(5px);
+}
+
+/* Feature card hover lift */
+.fc {
+  transition: box-shadow 0.22s ease, transform 0.22s ease;
+  will-change: transform;
+}
+.fc:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 8px 28px rgba(0,0,0,0.10);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .sr, .cv-left.cva, .cv-axis.cva, .cv-right.cva, .cv-row.cva-row {
+    opacity: 1 !important; transform: none !important;
+    transition: none !important;
+  }
+  .cv-right::before, .cv-right::after { animation: none !important; }
+  .fc { transition: none; }
+}
+
+/* ─────────────── TRUSTED BY ─────────────── */
+.trusted-section {
+  background: #090910;
+  padding: 62px 0 68px;
+  overflow: hidden;
+  position: relative;
+}
+.trusted-section::before {
+  content: '';
+  position: absolute; top: 0; left: 0; right: 0; height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.10) 30%, rgba(255,255,255,0.10) 70%, transparent);
+}
+.trusted-section::after {
+  content: '';
+  position: absolute; top: 50%; left: 50%;
+  transform: translate(-50%, -50%);
+  width: 60%; height: 100%;
+  background: radial-gradient(ellipse, rgba(147,51,234,0.06) 0%, transparent 70%);
+  pointer-events: none;
+}
+
+.trusted-kicker {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 10.5px; letter-spacing: 0.24em;
+  text-transform: uppercase;
+  color: rgba(255,255,255,0.30);
+  text-align: center;
+  margin-bottom: 46px;
+  position: relative; z-index: 1;
+}
+
+.marquee-rows { display: flex; flex-direction: column; gap: 0; position: relative; z-index: 1; }
+
+.marquee-row {
+  overflow: hidden; padding: 10px 0;
+  mask-image: linear-gradient(90deg, transparent 0%, black 6%, black 94%, transparent 100%);
+  -webkit-mask-image: linear-gradient(90deg, transparent 0%, black 6%, black 94%, transparent 100%);
+}
+.marquee-row + .marquee-row {
+  border-top: 1px solid rgba(255,255,255,0.045);
+  padding-top: 16px; margin-top: 6px;
+}
+
+.marquee-track {
+  display: flex; align-items: center;
+  width: max-content;
+}
+.marquee-track.fwd { animation: mq-fwd 38s linear infinite; }
+.marquee-track.rev { animation: mq-rev 47s linear infinite; }
+.marquee-track:hover { animation-play-state: paused; }
+
+@keyframes mq-fwd { from { transform: translateX(0); }    to { transform: translateX(-50%); } }
+@keyframes mq-rev { from { transform: translateX(-50%); } to { transform: translateX(0); }    }
+
+.brand {
+  padding: 0 34px; white-space: nowrap; cursor: default;
+  color: rgba(255,255,255,0.36); text-transform: uppercase;
+  transition: color 0.28s ease, text-shadow 0.28s ease;
+  display: inline-block;
+}
+.brand:hover {
+  color: rgba(255,255,255,0.92);
+  text-shadow: 0 0 28px rgba(255,255,255,0.18);
+}
+
+.brand-sep {
+  color: rgba(255,255,255,0.10);
+  font-size: 11px; display: inline-block;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .marquee-track.fwd, .marquee-track.rev { animation: none; }
+}
+
+/* ─────────────── TIMELINE SPOTLIGHT ─────────────── */
+.tl-callout {
+  position: absolute;
+  bottom: calc(100% + 20px);
+  left: 50%;
+  transform: translateX(-50%);
+  background: rgba(255,255,255,0.10);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  border: 1px solid rgba(255,255,255,0.18);
+  border-radius: 9px;
+  padding: 9px 16px;
+  white-space: nowrap;
+  pointer-events: none;
+  z-index: 20;
+  opacity: 0;
+  display: flex; flex-direction: column; align-items: center; gap: 2px;
+  transition: left 0.52s cubic-bezier(.22,1,.36,1), opacity 0.28s ease;
+}
+.tl-callout.show { opacity: 1; }
+.tl-callout::after {
+  content: '';
+  position: absolute; top: 100%; left: 50%;
+  transform: translateX(-50%);
+  border: 6px solid transparent;
+  border-top-color: rgba(255,255,255,0.18);
+}
+
+.tl-cy {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 9.5px; letter-spacing: 0.12em;
+  color: rgba(255,255,255,0.52);
+  transition: opacity 0.18s ease;
+}
+.tl-ct {
+  font-family: 'Outfit', sans-serif;
+  font-size: 12.5px; font-weight: 700;
+  color: rgba(255,255,255,0.96);
+  transition: opacity 0.18s ease;
+}
+
+@keyframes dotRing {
+  0%   { box-shadow: 0 0 0 0   rgba(255,255,255,0.50); }
+  70%  { box-shadow: 0 0 0 10px rgba(255,255,255,0);   }
+  100% { box-shadow: 0 0 0 0   rgba(255,255,255,0);    }
+}
+.mini-node.tl-active .mini-dot {
+  transform: scale(1.85) !important;
+  animation: dotRing 1.5s ease-out infinite;
+  transition: transform 0.30s ease !important;
+}
+.mini-node.tl-active .mini-year  { color: rgba(255,255,255,0.96) !important; }
+.mini-node.tl-active .mini-label { color: rgba(255,255,255,0.80) !important; }
+
+@media (prefers-reduced-motion: reduce) {
+  .mini-node.tl-active .mini-dot { animation: none; }
+  .tl-callout { transition: none; }
+}
 </style>
 </head>
 <body>
@@ -419,6 +622,10 @@ footer p { font-size: 12px; color: var(--ink-3); }
     <p class="hero-desc">Six waves of innovation rebuilt Demandware from a monolithic storefront into an AI-first, natively integrated commerce platform — purpose-built for the agentic era.</p>
 
     <nav class="mini-timeline" aria-label="Platform evolution timeline">
+      <div class="tl-callout" id="tlCallout">
+        <span class="tl-cy"></span>
+        <span class="tl-ct"></span>
+      </div>
       <a href="#folds" class="mini-node">
         <div class="mini-dot" style="background:#94A3B8"></div>
         <span class="mini-year">2016</span>
@@ -839,6 +1046,53 @@ footer p { font-size: 12px; color: var(--ink-3); }
   </div>
 </section>
 
+<!-- ══════════════════ TRUSTED BY ══════════════════ -->
+<section class="trusted-section">
+  <p class="trusted-kicker sr">Trusted by luxury brands all over the world</p>
+
+  <div class="marquee-rows">
+
+    <!-- Row 1 → Hugo Boss · Gucci · Chanel · LVMH · Chopard · Marc Jacobs -->
+    <div class="marquee-row">
+      <div class="marquee-track fwd">
+        <span class="brand" style="font-family:'Outfit',sans-serif;font-weight:800;font-size:18px;letter-spacing:0.14em">Hugo Boss</span><span class="brand-sep">·</span>
+        <span class="brand" style="font-family:'Outfit',sans-serif;font-weight:800;font-size:22px;letter-spacing:0.06em">Gucci</span><span class="brand-sep">·</span>
+        <span class="brand" style="font-family:'Inter',sans-serif;font-weight:300;font-size:15px;letter-spacing:0.46em">Chanel</span><span class="brand-sep">·</span>
+        <span class="brand" style="font-family:'Outfit',sans-serif;font-weight:900;font-size:26px;letter-spacing:0.12em">LVMH</span><span class="brand-sep">·</span>
+        <span class="brand" style="font-family:'Inter',sans-serif;font-weight:300;font-size:13px;letter-spacing:0.42em">Chopard</span><span class="brand-sep">·</span>
+        <span class="brand" style="font-family:'Outfit',sans-serif;font-weight:600;font-size:16px;letter-spacing:0.12em">Marc Jacobs</span><span class="brand-sep">·</span>
+        <!-- duplicate for seamless loop -->
+        <span class="brand" style="font-family:'Outfit',sans-serif;font-weight:800;font-size:18px;letter-spacing:0.14em">Hugo Boss</span><span class="brand-sep">·</span>
+        <span class="brand" style="font-family:'Outfit',sans-serif;font-weight:800;font-size:22px;letter-spacing:0.06em">Gucci</span><span class="brand-sep">·</span>
+        <span class="brand" style="font-family:'Inter',sans-serif;font-weight:300;font-size:15px;letter-spacing:0.46em">Chanel</span><span class="brand-sep">·</span>
+        <span class="brand" style="font-family:'Outfit',sans-serif;font-weight:900;font-size:26px;letter-spacing:0.12em">LVMH</span><span class="brand-sep">·</span>
+        <span class="brand" style="font-family:'Inter',sans-serif;font-weight:300;font-size:13px;letter-spacing:0.42em">Chopard</span><span class="brand-sep">·</span>
+        <span class="brand" style="font-family:'Outfit',sans-serif;font-weight:600;font-size:16px;letter-spacing:0.12em">Marc Jacobs</span><span class="brand-sep">·</span>
+      </div>
+    </div>
+
+    <!-- Row 2 ← YSL · Saks · Kering · L'Oréal · Brunello Cucinelli · D&G -->
+    <div class="marquee-row">
+      <div class="marquee-track rev">
+        <span class="brand" style="font-family:'Inter',sans-serif;font-weight:300;font-size:11px;letter-spacing:0.30em">Yves Saint Laurent</span><span class="brand-sep">·</span>
+        <span class="brand" style="font-family:'Outfit',sans-serif;font-weight:600;font-size:14px;letter-spacing:0.20em">Saks Fifth Avenue</span><span class="brand-sep">·</span>
+        <span class="brand" style="font-family:'Outfit',sans-serif;font-weight:800;font-size:22px;letter-spacing:0.24em">Kering</span><span class="brand-sep">·</span>
+        <span class="brand" style="font-family:'Inter',sans-serif;font-weight:500;font-size:17px;letter-spacing:0.08em">L'Oréal</span><span class="brand-sep">·</span>
+        <span class="brand" style="font-family:'Inter',sans-serif;font-weight:300;font-size:10px;letter-spacing:0.20em">Brunello Cucinelli</span><span class="brand-sep">·</span>
+        <span class="brand" style="font-family:'Outfit',sans-serif;font-weight:700;font-size:14px;letter-spacing:0.12em">Dolce &amp; Gabbana</span><span class="brand-sep">·</span>
+        <!-- duplicate for seamless loop -->
+        <span class="brand" style="font-family:'Inter',sans-serif;font-weight:300;font-size:11px;letter-spacing:0.30em">Yves Saint Laurent</span><span class="brand-sep">·</span>
+        <span class="brand" style="font-family:'Outfit',sans-serif;font-weight:600;font-size:14px;letter-spacing:0.20em">Saks Fifth Avenue</span><span class="brand-sep">·</span>
+        <span class="brand" style="font-family:'Outfit',sans-serif;font-weight:800;font-size:22px;letter-spacing:0.24em">Kering</span><span class="brand-sep">·</span>
+        <span class="brand" style="font-family:'Inter',sans-serif;font-weight:500;font-size:17px;letter-spacing:0.08em">L'Oréal</span><span class="brand-sep">·</span>
+        <span class="brand" style="font-family:'Inter',sans-serif;font-weight:300;font-size:10px;letter-spacing:0.20em">Brunello Cucinelli</span><span class="brand-sep">·</span>
+        <span class="brand" style="font-family:'Outfit',sans-serif;font-weight:700;font-size:14px;letter-spacing:0.12em">Dolce &amp; Gabbana</span><span class="brand-sep">·</span>
+      </div>
+    </div>
+
+  </div>
+</section>
+
 <!-- ══════════════════ FOOTER ══════════════════ -->
 <footer>
   <p>Salesforce Agentforce Commerce Cloud — Platform Evolution 2016–2026</p>
@@ -846,28 +1100,185 @@ footer p { font-size: 12px; color: var(--ink-3); }
 </footer>
 
 <script>
-  // Tab switching
-  const tabBtns  = document.querySelectorAll('.tab-btn');
-  const tabPanels = document.querySelectorAll('.tab-panel');
+/* ── Motion preference ── */
+const noMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
-  tabBtns.forEach(btn => {
-    btn.addEventListener('click', () => {
-      tabBtns.forEach(b  => { b.classList.remove('active'); b.setAttribute('aria-selected','false'); });
-      tabPanels.forEach(p => p.classList.remove('active'));
-      btn.classList.add('active');
-      btn.setAttribute('aria-selected','true');
-      document.getElementById('tab-' + btn.dataset.tab).classList.add('active');
+/* ── Tab switching ── */
+const tabBtns   = document.querySelectorAll('.tab-btn');
+const tabPanels = document.querySelectorAll('.tab-panel');
+
+tabBtns.forEach(btn => {
+  btn.addEventListener('click', () => {
+    tabBtns.forEach(b  => { b.classList.remove('active'); b.setAttribute('aria-selected','false'); });
+    tabPanels.forEach(p => p.classList.remove('active'));
+    btn.classList.add('active');
+    btn.setAttribute('aria-selected','true');
+    const panel = document.getElementById('tab-' + btn.dataset.tab);
+    panel.classList.add('active');
+    // Animate newly revealed cards
+    panel.querySelectorAll('.fc.sr:not(.visible)').forEach((fc, i) => {
+      setTimeout(() => fc.classList.add('visible'), i * 90);
     });
   });
+});
 
-  // Smooth scroll for hero nav dots
-  document.querySelectorAll('a[href^="#"]').forEach(a => {
-    a.addEventListener('click', e => {
-      e.preventDefault();
-      const el = document.querySelector(a.getAttribute('href'));
-      if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
-    });
+/* ── Smooth scroll ── */
+document.querySelectorAll('a[href^="#"]').forEach(a => {
+  a.addEventListener('click', e => {
+    e.preventDefault();
+    const el = document.querySelector(a.getAttribute('href'));
+    if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
   });
+});
+
+/* ── Scroll reveal: mark elements ── */
+[
+  ...document.querySelectorAll('.eyebrow'),
+  ...document.querySelectorAll('.section-title'),
+  ...document.querySelectorAll('.fold-sub'),
+  ...document.querySelectorAll('.compare-title-wrap'),
+].forEach(el => el.classList.add('sr'));
+
+// Stagger feature cards per grid
+document.querySelectorAll('.cards-grid').forEach(grid => {
+  grid.querySelectorAll('.fc').forEach((fc, i) => {
+    fc.classList.add('sr');
+    if (i > 0) fc.classList.add('sr-d' + Math.min(i, 4));
+  });
+});
+
+// Stagger stats
+document.querySelectorAll('.stats-grid .stat').forEach((s, i) => {
+  s.classList.add('sr');
+  if (i > 0) s.classList.add('sr-d' + Math.min(i, 4));
+});
+
+// Observer
+const revObs = new IntersectionObserver(entries => {
+  entries.forEach(e => {
+    if (e.isIntersecting) { e.target.classList.add('visible'); revObs.unobserve(e.target); }
+  });
+}, { threshold: 0.12 });
+document.querySelectorAll('.sr').forEach(el => revObs.observe(el));
+
+/* ── Comparison visual reveal ── */
+if (!noMotion) {
+  const cvLeft   = document.querySelector('.cv-left');
+  const cvAxis   = document.querySelector('.cv-axis');
+  const cvRight  = document.querySelector('.cv-right');
+  const cvVisual = document.querySelector('.compare-visual');
+
+  cvLeft.classList.add('cva');
+  cvAxis.classList.add('cva');
+  cvRight.classList.add('cva');
+  document.querySelectorAll('.cv-row').forEach(r => r.classList.add('cva-row'));
+
+  const cvObs = new IntersectionObserver(([entry]) => {
+    if (!entry.isIntersecting) return;
+    // Panels slide in
+    setTimeout(() => cvLeft.classList.add('visible'),   0);
+    setTimeout(() => cvRight.classList.add('visible'), 120);
+    setTimeout(() => cvAxis.classList.add('visible'),  300);
+    // Rows cascade after panels arrive
+    ['left', 'axis', 'right'].forEach((side, si) => {
+      document.querySelectorAll(`.cv-${side} .cv-row`).forEach((row, ri) => {
+        setTimeout(() => row.classList.add('visible'), 430 + si * 25 + ri * 85);
+      });
+    });
+    cvObs.disconnect();
+  }, { threshold: 0.15 });
+  cvObs.observe(cvVisual);
+}
+
+/* ── Linked row hover ── */
+const lRows = [...document.querySelectorAll('.cv-left  .cv-row')];
+const aRows = [...document.querySelectorAll('.cv-axis  .cv-row')];
+const rRows = [...document.querySelectorAll('.cv-right .cv-row')];
+
+function setHover(i, on) {
+  [lRows[i], aRows[i], rRows[i]].forEach(r => r && r.classList.toggle('row-hi', on));
+}
+[...lRows, ...rRows].forEach((row, fi) => {
+  const i = fi % lRows.length;
+  row.addEventListener('mouseenter', () => setHover(i, true));
+  row.addEventListener('mouseleave',  () => setHover(i, false));
+});
+
+/* ── Stats counter ── */
+function countUp(el) {
+  const orig = el.textContent.trim();
+  const m = orig.match(/^([\d.]+)(.*)/);
+  if (!m) return;
+  const target = parseFloat(m[1]);
+  const suffix = m[2];
+  const dec    = (m[1].split('.')[1] || '').length;
+  const dur    = 1400;
+  const t0     = performance.now();
+  (function tick(now) {
+    const p = Math.min((now - t0) / dur, 1);
+    const v = target * (1 - Math.pow(1 - p, 3)); // ease-out cubic
+    el.textContent = v.toFixed(dec) + suffix;
+    if (p < 1) requestAnimationFrame(tick);
+  })(performance.now());
+}
+
+const statObs = new IntersectionObserver(entries => {
+  entries.forEach(e => {
+    if (!e.isIntersecting) return;
+    if (!noMotion) countUp(e.target.querySelector('.stat-num'));
+    statObs.unobserve(e.target);
+  });
+}, { threshold: 0.5 });
+document.querySelectorAll('.stat').forEach(s => statObs.observe(s));
+
+/* ── Mini-timeline auto-advance ── */
+(function () {
+  if (noMotion) return;
+
+  const tlData = [
+    { year: '2016',    theme: 'Demandware Acquisition'  },
+    { year: '2017–18', theme: 'SFRA & Mobile-First'     },
+    { year: '2019–20', theme: 'API-First & Headless'    },
+    { year: '2021',    theme: 'Composable Commerce'     },
+    { year: '2022–23', theme: '50B+ AI Recommendations' },
+    { year: '2024–25', theme: 'Agentforce Launched'     },
+    { year: '2026',    theme: 'Storefront Next GA'      },
+  ];
+
+  const tlEl   = document.querySelector('.mini-timeline');
+  const nodes  = [...tlEl.querySelectorAll('.mini-node')];
+  const box    = document.getElementById('tlCallout');
+  const cYear  = box.querySelector('.tl-cy');
+  const cTheme = box.querySelector('.tl-ct');
+  let cur = 0, timer;
+
+  function activate(i) {
+    nodes.forEach(n => n.classList.remove('tl-active'));
+    nodes[i].classList.add('tl-active');
+
+    // Slide callout to centre of active node, clamped inside timeline
+    const cx = nodes[i].offsetLeft + nodes[i].offsetWidth / 2;
+    box.style.left = Math.max(100, Math.min(tlEl.offsetWidth - 100, cx)) + 'px';
+    box.classList.add('show');
+
+    // Cross-fade label content
+    cYear.style.opacity = cTheme.style.opacity = '0';
+    setTimeout(() => {
+      cYear.textContent  = tlData[i].year;
+      cTheme.textContent = tlData[i].theme;
+      cYear.style.opacity = cTheme.style.opacity = '1';
+    }, 210);
+  }
+
+  function advance() { cur = (cur + 1) % nodes.length; activate(cur); }
+
+  // Boot after 1 s, advance every 2.8 s
+  setTimeout(() => { activate(0); timer = setInterval(advance, 2800); }, 1000);
+
+  // Pause when user hovers the timeline
+  tlEl.addEventListener('mouseenter', () => clearInterval(timer));
+  tlEl.addEventListener('mouseleave', () => { timer = setInterval(advance, 2800); });
+})();
 </script>
 
 </body>
