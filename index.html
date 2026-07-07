@@ -542,6 +542,65 @@ footer p { font-size: 12px; color: var(--ink-3); }
 @media (prefers-reduced-motion: reduce) {
   .marquee-track.fwd, .marquee-track.rev { animation: none; }
 }
+
+/* ─────────────── TIMELINE SPOTLIGHT ─────────────── */
+.tl-callout {
+  position: absolute;
+  bottom: calc(100% + 20px);
+  left: 50%;
+  transform: translateX(-50%);
+  background: rgba(255,255,255,0.10);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  border: 1px solid rgba(255,255,255,0.18);
+  border-radius: 9px;
+  padding: 9px 16px;
+  white-space: nowrap;
+  pointer-events: none;
+  z-index: 20;
+  opacity: 0;
+  display: flex; flex-direction: column; align-items: center; gap: 2px;
+  transition: left 0.52s cubic-bezier(.22,1,.36,1), opacity 0.28s ease;
+}
+.tl-callout.show { opacity: 1; }
+.tl-callout::after {
+  content: '';
+  position: absolute; top: 100%; left: 50%;
+  transform: translateX(-50%);
+  border: 6px solid transparent;
+  border-top-color: rgba(255,255,255,0.18);
+}
+
+.tl-cy {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 9.5px; letter-spacing: 0.12em;
+  color: rgba(255,255,255,0.52);
+  transition: opacity 0.18s ease;
+}
+.tl-ct {
+  font-family: 'Outfit', sans-serif;
+  font-size: 12.5px; font-weight: 700;
+  color: rgba(255,255,255,0.96);
+  transition: opacity 0.18s ease;
+}
+
+@keyframes dotRing {
+  0%   { box-shadow: 0 0 0 0   rgba(255,255,255,0.50); }
+  70%  { box-shadow: 0 0 0 10px rgba(255,255,255,0);   }
+  100% { box-shadow: 0 0 0 0   rgba(255,255,255,0);    }
+}
+.mini-node.tl-active .mini-dot {
+  transform: scale(1.85) !important;
+  animation: dotRing 1.5s ease-out infinite;
+  transition: transform 0.30s ease !important;
+}
+.mini-node.tl-active .mini-year  { color: rgba(255,255,255,0.96) !important; }
+.mini-node.tl-active .mini-label { color: rgba(255,255,255,0.80) !important; }
+
+@media (prefers-reduced-motion: reduce) {
+  .mini-node.tl-active .mini-dot { animation: none; }
+  .tl-callout { transition: none; }
+}
 </style>
 </head>
 <body>
@@ -559,10 +618,14 @@ footer p { font-size: 12px; color: var(--ink-3); }
       <span class="badge current">Salesforce Agentforce Commerce Cloud</span>
     </div>
 
-    <h1>The brand is the same.<br><em>The platform is not.</em></h1>
+    <h1>A Platform<br><em>Entirely Rewritten</em></h1>
     <p class="hero-desc">Six waves of innovation rebuilt Demandware from a monolithic storefront into an AI-first, natively integrated commerce platform — purpose-built for the agentic era.</p>
 
     <nav class="mini-timeline" aria-label="Platform evolution timeline">
+      <div class="tl-callout" id="tlCallout">
+        <span class="tl-cy"></span>
+        <span class="tl-ct"></span>
+      </div>
       <a href="#folds" class="mini-node">
         <div class="mini-dot" style="background:#94A3B8"></div>
         <span class="mini-year">2016</span>
@@ -607,8 +670,8 @@ footer p { font-size: 12px; color: var(--ink-3); }
   <div class="section-inner">
 
     <div class="compare-title-wrap">
-      <p class="eyebrow">— Platform transformation</p>
-      <h2 class="section-title" style="margin-bottom:0">A Platform Entirely Rewritten</h2>
+      <p class="eyebrow">— 2016 → 2026</p>
+      <h2 class="section-title" style="margin-bottom:0">Platform Transformation</h2>
     </div>
 
     <div class="compare-visual">
@@ -1167,6 +1230,55 @@ const statObs = new IntersectionObserver(entries => {
   });
 }, { threshold: 0.5 });
 document.querySelectorAll('.stat').forEach(s => statObs.observe(s));
+
+/* ── Mini-timeline auto-advance ── */
+(function () {
+  if (noMotion) return;
+
+  const tlData = [
+    { year: '2016',    theme: 'Demandware Acquisition'  },
+    { year: '2017–18', theme: 'SFRA & Mobile-First'     },
+    { year: '2019–20', theme: 'API-First & Headless'    },
+    { year: '2021',    theme: 'Composable Commerce'     },
+    { year: '2022–23', theme: '50B+ AI Recommendations' },
+    { year: '2024–25', theme: 'Agentforce Launched'     },
+    { year: '2026',    theme: 'Storefront Next GA'      },
+  ];
+
+  const tlEl   = document.querySelector('.mini-timeline');
+  const nodes  = [...tlEl.querySelectorAll('.mini-node')];
+  const box    = document.getElementById('tlCallout');
+  const cYear  = box.querySelector('.tl-cy');
+  const cTheme = box.querySelector('.tl-ct');
+  let cur = 0, timer;
+
+  function activate(i) {
+    nodes.forEach(n => n.classList.remove('tl-active'));
+    nodes[i].classList.add('tl-active');
+
+    // Slide callout to centre of active node, clamped inside timeline
+    const cx = nodes[i].offsetLeft + nodes[i].offsetWidth / 2;
+    box.style.left = Math.max(100, Math.min(tlEl.offsetWidth - 100, cx)) + 'px';
+    box.classList.add('show');
+
+    // Cross-fade label content
+    cYear.style.opacity = cTheme.style.opacity = '0';
+    setTimeout(() => {
+      cYear.textContent  = tlData[i].year;
+      cTheme.textContent = tlData[i].theme;
+      cYear.style.opacity = cTheme.style.opacity = '1';
+    }, 210);
+  }
+
+  function advance() { cur = (cur + 1) % nodes.length; activate(cur); }
+
+  // Boot after 1 s, advance every 2.8 s
+  setTimeout(() => { activate(0); timer = setInterval(advance, 2800); }, 1000);
+
+  // Pause when user hovers the timeline
+  tlEl.addEventListener('mouseenter', () => clearInterval(timer));
+  tlEl.addEventListener('mouseleave', () => { timer = setInterval(advance, 2800); });
+})();
 </script>
 
 </body>
