@@ -1,0 +1,1052 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Salesforce Agentforce Commerce Cloud — Platform Evolution 2016–2026</title>
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;600;700;800;900&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+:root {
+  color-scheme: light;
+  --bg:     #F8F7F4;
+  --white:  #FFFFFF;
+  --ink:    #0F172A;
+  --ink-2:  #334155;
+  --ink-3:  #4E6174;
+  --border: #E2E8F0;
+  --dark:   #032D60;
+  --merch:  #7C3AED;
+  --dev:    #2563EB;
+}
+
+body {
+  font-family: 'Inter', system-ui, sans-serif;
+  background: var(--bg);
+  color: var(--ink);
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* ─────────────── HERO ─────────────── */
+.hero {
+  background: var(--dark);
+  padding: 68px 64px 56px;
+  position: relative;
+  overflow: hidden;
+}
+
+.hero-glow {
+  position: absolute;
+  top: -80px; left: 50%; transform: translateX(-50%);
+  width: 700px; height: 500px;
+  background: radial-gradient(ellipse at center top, rgba(0,161,224,0.18) 0%, transparent 65%);
+  pointer-events: none;
+}
+
+.hero::before {
+  content: '';
+  position: absolute;
+  bottom: 0; left: 0; right: 0; height: 3px;
+  background: linear-gradient(90deg,
+    #94A3B8 0%, #3B82F6 20%, #2563EB 35%,
+    #4F46E5 50%, #7C3AED 65%, #9333EA 80%, #6D28D9 100%);
+}
+
+.hero-inner { max-width: 880px; margin: 0 auto; position: relative; z-index: 1; }
+
+.hero-kicker {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 11px; letter-spacing: 0.2em; text-transform: uppercase;
+  color: rgba(255,255,255,0.68); margin-bottom: 26px;
+}
+
+.hero-eyebrow {
+  display: flex; align-items: center; gap: 14px;
+  margin-bottom: 28px; flex-wrap: wrap;
+}
+
+.badge {
+  font-family: 'Outfit', sans-serif;
+  font-size: 13.5px; font-weight: 600;
+  padding: 5px 13px; border-radius: 6px;
+}
+.badge.legacy {
+  background: rgba(148,163,184,0.08); color: rgba(255,255,255,0.68);
+  border: 1px solid rgba(148,163,184,0.22);
+  text-decoration: line-through; text-decoration-color: rgba(255,255,255,0.42);
+}
+.badge.current {
+  background: linear-gradient(135deg, rgba(0,161,224,0.2), rgba(109,40,217,0.2));
+  color: #93C5FD; border: 1px solid rgba(0,161,224,0.32);
+}
+.hero-arrow { color: rgba(255,255,255,0.48); font-size: 18px; }
+
+.hero h1 {
+  font-family: 'Outfit', sans-serif;
+  font-size: clamp(32px, 5.5vw, 60px); font-weight: 800;
+  line-height: 1.06; letter-spacing: -0.025em;
+  color: white; margin-bottom: 18px;
+}
+.hero h1 em {
+  font-style: normal;
+  background: linear-gradient(120deg, #7DD3FC 0%, #C4B5FD 100%);
+  -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+}
+
+.hero-desc {
+  font-size: 16px; color: rgba(255,255,255,0.84);
+  max-width: 540px; margin-bottom: 52px; line-height: 1.7;
+}
+
+/* Mini horizontal timeline in hero */
+.mini-timeline {
+  position: relative; display: flex;
+  justify-content: space-between; align-items: flex-start;
+}
+.mini-timeline::before {
+  content: ''; position: absolute;
+  top: 9px; left: 9px; right: 9px; height: 2px;
+  background: linear-gradient(90deg, #94A3B8, #3B82F6, #2563EB, #4F46E5, #7C3AED, #9333EA, #6D28D9);
+}
+.mini-node {
+  display: flex; flex-direction: column; align-items: center;
+  gap: 9px; position: relative; z-index: 1; text-decoration: none; cursor: pointer;
+}
+.mini-dot {
+  width: 18px; height: 18px; border-radius: 50%;
+  border: 3px solid var(--dark); flex-shrink: 0;
+  transition: transform 0.18s, box-shadow 0.18s;
+}
+.mini-node:hover .mini-dot { transform: scale(1.35); box-shadow: 0 0 0 4px rgba(255,255,255,0.1); }
+.mini-year { font-family: 'JetBrains Mono', monospace; font-size: 10.5px; color: rgba(255,255,255,0.76); }
+.mini-label { font-size: 10.5px; color: rgba(255,255,255,0.68); text-align: center; max-width: 64px; line-height: 1.3; }
+
+/* Progressive scale: small at 2016, large at 2026 */
+.mini-timeline .mini-node:nth-child(1) .mini-year,
+.mini-timeline .mini-node:nth-child(1) .mini-label { font-size: 8px; }
+.mini-timeline .mini-node:nth-child(2) .mini-year,
+.mini-timeline .mini-node:nth-child(2) .mini-label { font-size: 9px; }
+.mini-timeline .mini-node:nth-child(3) .mini-year,
+.mini-timeline .mini-node:nth-child(3) .mini-label { font-size: 9.5px; }
+.mini-timeline .mini-node:nth-child(4) .mini-year,
+.mini-timeline .mini-node:nth-child(4) .mini-label { font-size: 10.5px; }
+.mini-timeline .mini-node:nth-child(5) .mini-year,
+.mini-timeline .mini-node:nth-child(5) .mini-label { font-size: 11.5px; }
+.mini-timeline .mini-node:nth-child(6) .mini-year,
+.mini-timeline .mini-node:nth-child(6) .mini-label { font-size: 12.5px; }
+.mini-timeline .mini-node:nth-child(7) .mini-year,
+.mini-timeline .mini-node:nth-child(7) .mini-label { font-size: 14px; font-weight: 500; }
+
+/* ─────────────── SHARED ─────────────── */
+.section-inner { max-width: 880px; margin: 0 auto; padding: 72px 64px; }
+.eyebrow {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 11px; letter-spacing: 0.18em;
+  text-transform: uppercase; color: var(--ink-3); margin-bottom: 10px;
+}
+.section-title {
+  font-family: 'Outfit', sans-serif;
+  font-size: clamp(26px, 4vw, 38px); font-weight: 800;
+  letter-spacing: -0.022em; line-height: 1.1;
+  margin-bottom: 32px; margin-top: 10px;
+}
+
+/* ─────────────── TAB FOLDS ─────────────── */
+.folds-section { background: var(--bg); }
+
+.tab-nav {
+  display: flex; gap: 4px;
+  background: var(--white); border: 1px solid var(--border);
+  border-radius: 10px; padding: 4px;
+  width: fit-content; margin-bottom: 36px;
+}
+
+.tab-btn {
+  display: flex; align-items: center; gap: 9px;
+  padding: 10px 22px; border: none; border-radius: 8px;
+  font-family: 'Outfit', sans-serif; font-size: 14px; font-weight: 600;
+  cursor: pointer; background: transparent; color: var(--ink-2);
+  transition: all 0.2s; white-space: nowrap;
+}
+.tab-btn svg { flex-shrink: 0; }
+.tab-btn[data-tab="merch"].active {
+  background: linear-gradient(135deg, #7C3AED, #9333EA);
+  color: white; box-shadow: 0 2px 8px rgba(124,58,237,0.35);
+}
+.tab-btn[data-tab="dev"].active {
+  background: linear-gradient(135deg, #1D4ED8, #2563EB);
+  color: white; box-shadow: 0 2px 8px rgba(37,99,235,0.35);
+}
+
+.fold-sub {
+  font-size: 15px; color: var(--ink-3);
+  margin-bottom: 28px; max-width: 540px; line-height: 1.6;
+}
+
+.tab-panel { display: none; }
+.tab-panel.active { display: block; animation: fadeUp 0.22s ease; }
+
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(10px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+/* Feature cards grid */
+.cards-grid {
+  display: grid; grid-template-columns: repeat(2, 1fr); gap: 16px;
+}
+
+.fc {
+  background: var(--white);
+  border: 1px solid var(--border);
+  border-top: 3px solid var(--ca);
+  border-radius: 12px; padding: 22px 20px;
+}
+
+.fc-top {
+  display: flex; justify-content: space-between;
+  align-items: flex-start; margin-bottom: 12px; gap: 10px;
+}
+
+.fc-icon {
+  width: 42px; height: 42px; border-radius: 10px; flex-shrink: 0;
+  display: flex; align-items: center; justify-content: center;
+  background: color-mix(in srgb, var(--ca) 10%, white);
+  color: var(--ca);
+}
+@supports not (background: color-mix(in srgb, red 50%, blue)) {
+  .fc-icon { background: #F1F5F9; }
+}
+
+.fc-year {
+  font-family: 'JetBrains Mono', monospace; font-size: 10.5px;
+  color: var(--ink-3); background: var(--bg);
+  padding: 3px 9px; border-radius: 20px; border: 1px solid var(--border);
+  white-space: nowrap;
+}
+
+.fc-title {
+  font-family: 'Outfit', sans-serif; font-size: 16px; font-weight: 700;
+  color: var(--ink); line-height: 1.25; margin-bottom: 8px;
+}
+
+.fc-desc {
+  font-size: 13.5px; color: var(--ink-2); line-height: 1.6; margin-bottom: 12px;
+}
+
+.chips { display: flex; flex-wrap: wrap; gap: 5px; }
+.chip {
+  font-size: 11.5px; font-weight: 500; padding: 3px 10px; border-radius: 20px;
+  background: color-mix(in srgb, var(--ca) 9%, white);
+  color: color-mix(in srgb, var(--ca) 80%, #1E293B);
+  border: 1px solid color-mix(in srgb, var(--ca) 18%, transparent);
+}
+@supports not (background: color-mix(in srgb, red 50%, blue)) {
+  .chip { background: #F1F5F9; color: var(--ca, #64748B); border-color: rgba(0,0,0,0.08); }
+}
+
+/* ─────────────── COMPARISON VISUAL ─────────────── */
+.compare-section { background: var(--bg); }
+.compare-section .section-inner { padding-bottom: 80px; }
+
+.compare-title-wrap { margin-bottom: 40px; }
+
+.compare-visual {
+  display: flex; border-radius: 16px; overflow: hidden;
+  box-shadow: 0 24px 64px rgba(0,0,0,0.22);
+}
+
+/* LEFT panel — Demandware 2016 */
+.cv-left {
+  flex: 1;
+  background: var(--white);
+  min-width: 0;
+  border-right: 1px solid var(--border);
+}
+
+/* CENTER axis */
+.cv-axis {
+  width: 52px;
+  background: #060E1A;
+  flex-shrink: 0;
+}
+
+/* RIGHT panel — Agentforce 2026 */
+.cv-right {
+  flex: 1;
+  background: linear-gradient(160deg, #0B1F6E 0%, #180B52 100%);
+  position: relative; overflow: hidden; min-width: 0;
+}
+/* Glow orbs on the Agentforce side */
+.cv-right::before {
+  content: ''; position: absolute; top: -10%; right: -5%;
+  width: 55%; height: 65%;
+  background: radial-gradient(ellipse, rgba(147,51,234,0.28) 0%, transparent 65%);
+  pointer-events: none;
+}
+.cv-right::after {
+  content: ''; position: absolute; bottom: 5%; left: 5%;
+  width: 45%; height: 55%;
+  background: radial-gradient(ellipse, rgba(37,99,235,0.22) 0%, transparent 65%);
+  pointer-events: none;
+}
+
+/* Panel headers */
+.cv-header {
+  padding: 14px 18px; text-align: center;
+  font-family: 'Outfit', sans-serif; font-size: 13px; font-weight: 700;
+  letter-spacing: 0.04em;
+}
+.cv-left .cv-header    { background: var(--bg); color: var(--ink-2); }
+.cv-axis .cv-header    { background: rgba(0,0,0,0.3); }
+.cv-right .cv-header   { background: rgba(255,255,255,0.06); color: rgba(255,255,255,0.9); }
+
+/* Comparison rows */
+.cv-row {
+  display: flex; align-items: center;
+  border-top: 1px solid rgba(255,255,255,0.048);
+}
+.cv-left  .cv-row { padding: 11px 16px; gap: 12px; min-height: 60px; border-top-color: var(--border); }
+.cv-axis  .cv-row { justify-content: center; min-height: 60px; padding: 4px 0; }
+.cv-right .cv-row { padding: 11px 16px; gap: 12px; min-height: 60px; justify-content: space-between; position: relative; z-index: 1; }
+
+/* Left: category pill */
+.cv-cat {
+  background: var(--bg); color: var(--ink);
+  font-family: 'Outfit', sans-serif; font-weight: 700;
+  font-size: 12px; padding: 7px 14px; border-radius: 6px;
+  white-space: nowrap; min-width: 136px; flex-shrink: 0;
+  border: 1px solid var(--border);
+}
+
+/* Left: old description */
+.cv-then {
+  color: var(--ink-2); font-size: 12.5px;
+  line-height: 1.4; flex: 1;
+}
+
+/* Center: arrow connector */
+.cv-arrow {
+  color: rgba(255,255,255,0.52);
+  font-size: 16px; line-height: 1;
+}
+
+/* Right: new description */
+.cv-now {
+  color: rgba(255,255,255,0.95);
+  font-family: 'Outfit', sans-serif; font-weight: 600;
+  font-size: 13px; line-height: 1.4; flex: 1;
+}
+
+/* Right: category + icon */
+.cv-cat-now {
+  display: flex; align-items: center; gap: 8px;
+  flex-shrink: 0; min-width: 136px; justify-content: flex-end;
+}
+.cv-cat-now span {
+  color: rgba(255,255,255,0.88);
+  font-family: 'Outfit', sans-serif; font-weight: 600;
+  font-size: 12px; white-space: nowrap;
+}
+.cv-ico {
+  width: 28px; height: 28px; border-radius: 7px;
+  background: rgba(255,255,255,0.11);
+  display: flex; align-items: center; justify-content: center;
+  color: rgba(255,255,255,0.88); flex-shrink: 0;
+}
+
+/* ─────────────── STATS ─────────────── */
+.stats-section { background: var(--bg); }
+
+.stats-grid {
+  display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px;
+}
+
+.stat {
+  background: var(--white); border: 1px solid var(--border);
+  border-radius: 10px; padding: 22px 20px;
+}
+.stat-num {
+  font-family: 'Outfit', sans-serif; font-size: 34px; font-weight: 800;
+  letter-spacing: -0.025em; line-height: 1; margin-bottom: 7px;
+  background: linear-gradient(135deg, #6D28D9, #1D4ED8);
+  -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+}
+.stat-desc { font-size: 13px; color: var(--ink-3); line-height: 1.45; }
+
+/* ─────────────── FOOTER ─────────────── */
+footer {
+  border-top: 1px solid var(--border); padding: 28px 64px;
+  display: flex; justify-content: space-between; align-items: center;
+  max-width: 880px; margin: 0 auto; flex-wrap: wrap; gap: 8px;
+}
+footer p { font-size: 12px; color: var(--ink-3); }
+
+/* ─────────────── RESPONSIVE ─────────────── */
+@media (max-width: 700px) {
+  .section-inner { padding: 48px 24px; }
+  footer { padding: 24px; flex-direction: column; }
+  .cards-grid { grid-template-columns: 1fr; }
+  .stats-grid { grid-template-columns: repeat(2, 1fr); }
+  .mini-timeline { display: none; }
+  .cv-cat { min-width: 100px; font-size: 11px; padding: 6px 10px; }
+  .cv-cat-now { min-width: 100px; }
+  .compare-visual { font-size: 12px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .tab-panel.active { animation: none; }
+}
+
+/* ─────────────── SCROLL REVEAL ─────────────── */
+.sr {
+  opacity: 0;
+  transform: translateY(28px);
+  transition: opacity 0.6s cubic-bezier(.22,1,.36,1),
+              transform 0.6s cubic-bezier(.22,1,.36,1);
+}
+.sr.visible { opacity: 1; transform: none; }
+.sr-d1 { transition-delay: 0.10s; }
+.sr-d2 { transition-delay: 0.20s; }
+.sr-d3 { transition-delay: 0.30s; }
+.sr-d4 { transition-delay: 0.40s; }
+
+/* ─────────────── COMPARISON ANIMATIONS ─────────────── */
+/* Breathing glow on Agentforce side */
+@keyframes breathe {
+  0%, 100% { opacity: 0.72; }
+  50%       { opacity: 1;    }
+}
+.cv-right::before { animation: breathe 5s   ease-in-out infinite; }
+.cv-right::after  { animation: breathe 7s   ease-in-out infinite 2s; }
+
+/* Panel slide-in */
+.cv-left.cva  { opacity: 0; transform: translateX(-36px);
+  transition: opacity 0.7s cubic-bezier(.22,1,.36,1),
+              transform 0.7s cubic-bezier(.22,1,.36,1); }
+.cv-axis.cva  { opacity: 0; transition: opacity 0.45s ease 0.30s; }
+.cv-right.cva { opacity: 0; transform: translateX(36px);
+  transition: opacity 0.7s cubic-bezier(.22,1,.36,1) 0.12s,
+              transform 0.7s cubic-bezier(.22,1,.36,1) 0.12s; }
+.cv-left.cva.visible,
+.cv-right.cva.visible { opacity: 1; transform: none; }
+.cv-axis.cva.visible  { opacity: 1; }
+
+/* Row cascade */
+.cv-row.cva-row {
+  opacity: 0; transform: translateY(8px);
+  transition: opacity 0.38s ease, transform 0.38s ease, background 0.2s ease;
+}
+.cv-row.cva-row.visible { opacity: 1; transform: none; }
+
+/* Linked row hover */
+.cv-left  .cv-row.row-hi { background: rgba(0,0,0,0.05); }
+.cv-right .cv-row.row-hi { background: rgba(255,255,255,0.06); }
+.cv-axis  .cv-row.row-hi { background: rgba(255,255,255,0.08); }
+.cv-axis  .cv-row .cv-arrow { transition: color 0.18s ease, transform 0.18s ease; }
+.cv-axis  .cv-row.row-hi .cv-arrow {
+  color: rgba(255,255,255,0.95) !important;
+  transform: translateX(5px);
+}
+
+/* Feature card hover lift */
+.fc {
+  transition: box-shadow 0.22s ease, transform 0.22s ease;
+  will-change: transform;
+}
+.fc:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 8px 28px rgba(0,0,0,0.10);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .sr, .cv-left.cva, .cv-axis.cva, .cv-right.cva, .cv-row.cva-row {
+    opacity: 1 !important; transform: none !important;
+    transition: none !important;
+  }
+  .cv-right::before, .cv-right::after { animation: none !important; }
+  .fc { transition: none; }
+}
+</style>
+</head>
+<body>
+
+<!-- ══════════════════ HERO ══════════════════ -->
+<header class="hero">
+  <div class="hero-glow"></div>
+  <div class="hero-inner">
+
+    <p class="hero-kicker">Salesforce Agentforce Commerce Cloud &nbsp;·&nbsp; Platform Evolution &nbsp;·&nbsp; 2016–2026</p>
+
+    <div class="hero-eyebrow">
+      <span class="badge legacy">Demandware</span>
+      <span class="hero-arrow">→</span>
+      <span class="badge current">Salesforce Agentforce Commerce Cloud</span>
+    </div>
+
+    <h1>The brand is the same.<br><em>The platform is not.</em></h1>
+    <p class="hero-desc">Six waves of innovation rebuilt Demandware from a monolithic storefront into an AI-first, natively integrated commerce platform — purpose-built for the agentic era.</p>
+
+    <nav class="mini-timeline" aria-label="Platform evolution timeline">
+      <a href="#folds" class="mini-node">
+        <div class="mini-dot" style="background:#94A3B8"></div>
+        <span class="mini-year">2016</span>
+        <span class="mini-label">Baseline</span>
+      </a>
+      <a href="#folds" class="mini-node">
+        <div class="mini-dot" style="background:#3B82F6"></div>
+        <span class="mini-year">2017–18</span>
+        <span class="mini-label">Storefront</span>
+      </a>
+      <a href="#folds" class="mini-node">
+        <div class="mini-dot" style="background:#2563EB"></div>
+        <span class="mini-year">2019–20</span>
+        <span class="mini-label">Headless</span>
+      </a>
+      <a href="#folds" class="mini-node">
+        <div class="mini-dot" style="background:#4F46E5"></div>
+        <span class="mini-year">2021</span>
+        <span class="mini-label">Composable</span>
+      </a>
+      <a href="#folds" class="mini-node">
+        <div class="mini-dot" style="background:#7C3AED"></div>
+        <span class="mini-year">2022–23</span>
+        <span class="mini-label">Ecosystem</span>
+      </a>
+      <a href="#folds" class="mini-node">
+        <div class="mini-dot" style="background:#9333EA"></div>
+        <span class="mini-year">2024–25</span>
+        <span class="mini-label">Agents</span>
+      </a>
+      <a href="#folds" class="mini-node">
+        <div class="mini-dot" style="background:#6D28D9"></div>
+        <span class="mini-year">2026</span>
+        <span class="mini-label">Agentic Era</span>
+      </a>
+    </nav>
+  </div>
+</header>
+
+<!-- ══════════════════ COMPARISON VISUAL ══════════════════ -->
+<section class="compare-section">
+  <div class="section-inner">
+
+    <div class="compare-title-wrap">
+      <p class="eyebrow">— Platform transformation</p>
+      <h2 class="section-title" style="margin-bottom:0">A Platform Entirely Rewritten</h2>
+    </div>
+
+    <div class="compare-visual">
+
+      <!-- LEFT: Demandware 2016 -->
+      <div class="cv-left">
+        <div class="cv-header">Demandware (2016)</div>
+
+        <div class="cv-row">
+          <div class="cv-cat">Storefront</div>
+          <div class="cv-then">SiteGenesis — monolithic, server-rendered</div>
+        </div>
+        <div class="cv-row">
+          <div class="cv-cat">Architecture</div>
+          <div class="cv-then">Tightly coupled, custom code everything</div>
+        </div>
+        <div class="cv-row">
+          <div class="cv-cat">Intelligence</div>
+          <div class="cv-then">Basic CQuotient recommendations</div>
+        </div>
+        <div class="cv-row">
+          <div class="cv-cat">CRM Integration</div>
+          <div class="cv-then">Expensive custom integration, fragile</div>
+        </div>
+        <div class="cv-row">
+          <div class="cv-cat">Developer Tools</div>
+          <div class="cv-then">Proprietary tooling, slow releases</div>
+        </div>
+        <div class="cv-row">
+          <div class="cv-cat">Shopper Identity</div>
+          <div class="cv-then">Siloed strictly to commerce</div>
+        </div>
+        <div class="cv-row">
+          <div class="cv-cat">Release Cadence</div>
+          <div class="cv-then">Slow, infrequent updates</div>
+        </div>
+      </div>
+
+      <!-- CENTER: axis -->
+      <div class="cv-axis">
+        <div class="cv-header"></div>
+        <div class="cv-row"><div class="cv-arrow">→</div></div>
+        <div class="cv-row"><div class="cv-arrow">→</div></div>
+        <div class="cv-row"><div class="cv-arrow">→</div></div>
+        <div class="cv-row"><div class="cv-arrow">→</div></div>
+        <div class="cv-row"><div class="cv-arrow">→</div></div>
+        <div class="cv-row"><div class="cv-arrow">→</div></div>
+        <div class="cv-row"><div class="cv-arrow">→</div></div>
+      </div>
+
+      <!-- RIGHT: Agentforce 2026 -->
+      <div class="cv-right">
+        <div class="cv-header">Salesforce Agentforce Commerce Cloud (2026)</div>
+
+        <div class="cv-row">
+          <div class="cv-now">Storefront Next — React, headless, live in 30 mins</div>
+          <div class="cv-cat-now">
+            <span>Storefront</span>
+            <div class="cv-ico">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" stroke="none"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
+            </div>
+          </div>
+        </div>
+        <div class="cv-row">
+          <div class="cv-now">Composable, API-first, clicks-not-code</div>
+          <div class="cv-cat-now">
+            <span>Architecture</span>
+            <div class="cv-ico">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M19.07 4.93a10 10 0 0 1 0 14.14M4.93 4.93a10 10 0 0 0 0 14.14"/><path d="M14.83 9.17a4 4 0 0 1 0 5.66M9.17 9.17a4 4 0 0 0 0 5.66"/></svg>
+            </div>
+          </div>
+        </div>
+        <div class="cv-row">
+          <div class="cv-now">Agentforce Shopper Agent, Merchant Agent, Agentic Search</div>
+          <div class="cv-cat-now">
+            <span>Intelligence</span>
+            <div class="cv-ico">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="4" width="16" height="16" rx="2"/><rect x="9" y="9" width="6" height="6"/><line x1="9" y1="1" x2="9" y2="4"/><line x1="15" y1="1" x2="15" y2="4"/><line x1="9" y1="20" x2="9" y2="23"/><line x1="15" y1="20" x2="15" y2="23"/><line x1="20" y1="9" x2="23" y2="9"/><line x1="20" y1="14" x2="23" y2="14"/><line x1="1" y1="9" x2="4" y2="9"/><line x1="1" y1="14" x2="4" y2="14"/></svg>
+            </div>
+          </div>
+        </div>
+        <div class="cv-row">
+          <div class="cv-now">Native Connection Framework — zero code, real-time</div>
+          <div class="cv-cat-now">
+            <span>CRM Integration</span>
+            <div class="cv-ico">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg>
+            </div>
+          </div>
+        </div>
+        <div class="cv-row">
+          <div class="cv-now">Unified CLI, MCP server, Figma-to-React capability</div>
+          <div class="cv-cat-now">
+            <span>Developer Tools</span>
+            <div class="cv-ico">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg>
+            </div>
+          </div>
+        </div>
+        <div class="cv-row">
+          <div class="cv-now">Unified Person Account — automatically synced to full CRM</div>
+          <div class="cv-cat-now">
+            <span>Shopper Identity</span>
+            <div class="cv-ico">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="23 4 23 10 17 10"/><polyline points="1 20 1 14 7 14"/><path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15"/></svg>
+            </div>
+          </div>
+        </div>
+        <div class="cv-row">
+          <div class="cv-now">Up to 10 major platform releases per year</div>
+          <div class="cv-cat-now">
+            <span>Release Cadence</span>
+            <div class="cv-ico">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21.5 2v6h-6M2.5 22v-6h6M2 11.5a10 10 0 0 1 18.8-4.3M22 12.5a10 10 0 0 1-18.8 4.2"/></svg>
+            </div>
+          </div>
+        </div>
+
+      </div><!-- /cv-right -->
+    </div><!-- /compare-visual -->
+  </div>
+</section>
+
+<!-- ══════════════════ TWO FOLDS ══════════════════ -->
+<section id="folds" class="folds-section">
+  <div class="section-inner">
+
+    <p class="eyebrow">— Innovation by role</p>
+    <h2 class="section-title">Built for your team</h2>
+
+    <!-- Tab buttons -->
+    <div class="tab-nav" role="tablist">
+      <button class="tab-btn active" data-tab="merch" role="tab" aria-selected="true">
+        <!-- shopping bag icon -->
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/>
+          <line x1="3" y1="6" x2="21" y2="6"/>
+          <path d="M16 10a4 4 0 0 1-8 0"/>
+        </svg>
+        For Merchandisers
+      </button>
+      <button class="tab-btn" data-tab="dev" role="tab" aria-selected="false">
+        <!-- code icon -->
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <polyline points="16 18 22 12 16 6"/>
+          <polyline points="8 6 2 12 8 18"/>
+        </svg>
+        For Developers
+      </button>
+    </div>
+
+    <!-- ── MERCHANDISER PANEL ── -->
+    <div class="tab-panel active" id="tab-merch" role="tabpanel">
+      <p class="fold-sub">AI-powered tools that grow revenue, automate workflows, and let your team sell smarter.</p>
+      <div class="cards-grid">
+
+        <!-- Card 1 -->
+        <div class="fc" style="--ca: #7C3AED">
+          <div class="fc-top">
+            <div class="fc-icon">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <rect x="4" y="4" width="16" height="16" rx="2"/>
+                <rect x="9" y="9" width="6" height="6"/>
+                <line x1="9" y1="1" x2="9" y2="4"/><line x1="15" y1="1" x2="15" y2="4"/>
+                <line x1="9" y1="20" x2="9" y2="23"/><line x1="15" y1="20" x2="15" y2="23"/>
+                <line x1="20" y1="9" x2="23" y2="9"/><line x1="20" y1="14" x2="23" y2="14"/>
+                <line x1="1" y1="9" x2="4" y2="9"/><line x1="1" y1="14" x2="4" y2="14"/>
+              </svg>
+            </div>
+            <span class="fc-year">2025 – Now</span>
+          </div>
+          <div class="fc-title">AI Shopping Agents</div>
+          <div class="fc-desc">Shopper Agent handles orders, returns, and cart management in natural conversation. Merchant Agent automates merchandising tasks with plain-English commands directly in Business Manager — no developer required.</div>
+          <div class="chips">
+            <span class="chip">Shopper Agent</span>
+            <span class="chip">Merchant Agent</span>
+            <span class="chip">Natural language</span>
+          </div>
+        </div>
+
+        <!-- Card 2 -->
+        <div class="fc" style="--ca: #9333EA">
+          <div class="fc-top">
+            <div class="fc-icon">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <circle cx="11" cy="11" r="8"/>
+                <line x1="21" y1="21" x2="16.65" y2="16.65"/>
+                <path d="M11 8a3 3 0 0 1 0 6"/>
+              </svg>
+            </div>
+            <span class="fc-year">2026</span>
+          </div>
+          <div class="fc-title">Intent-Aware Agentic Search</div>
+          <div class="fc-desc">Cimulate's CommerceGPT understands what shoppers mean, not just what they type — trained on synthetic behavioral data to surface the right product from even ambiguous queries.</div>
+          <div class="chips">
+            <span class="chip">Agentic Search</span>
+            <span class="chip">CommerceGPT</span>
+            <span class="chip">Cimulate</span>
+          </div>
+        </div>
+
+        <!-- Card 3 -->
+        <div class="fc" style="--ca: #6D28D9">
+          <div class="fc-top">
+            <div class="fc-icon">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" stroke="none">
+                <rect x="3" y="3" width="7" height="7" rx="1.5"/>
+                <rect x="14" y="3" width="7" height="7" rx="1.5"/>
+                <rect x="14" y="14" width="7" height="7" rx="1.5"/>
+                <rect x="3" y="14" width="7" height="7" rx="1.5"/>
+              </svg>
+            </div>
+            <span class="fc-year">2022 – Now</span>
+          </div>
+          <div class="fc-title">50B+ AI Recommendations &amp; Ecosystem</div>
+          <div class="fc-desc">Einstein AI delivers over 50 billion personalised product recommendations annually. Commerce Apps Framework adds plug-and-play integrations — Adyen, Stripe, Avalara, Contentstack — without a line of custom code.</div>
+          <div class="chips">
+            <span class="chip">50B+ rec/yr</span>
+            <span class="chip">Commerce Apps Framework</span>
+            <span class="chip">Clicks-not-code</span>
+          </div>
+        </div>
+
+        <!-- Card 4 -->
+        <div class="fc" style="--ca: #4F46E5">
+          <div class="fc-top">
+            <div class="fc-icon">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <rect x="3" y="3" width="18" height="18" rx="2" ry="2"/>
+                <line x1="3" y1="9" x2="21" y2="9"/>
+                <line x1="9" y1="21" x2="9" y2="9"/>
+              </svg>
+            </div>
+            <span class="fc-year">2026</span>
+          </div>
+          <div class="fc-title">No-Code Storefront &amp; Page Designer</div>
+          <div class="fc-desc">Storefront Next ships with a drag-and-drop Page Designer and pre-built Market Street Blueprint covering PDP, PLP, Checkout, and My Account — publish changes without filing a dev ticket.</div>
+          <div class="chips">
+            <span class="chip">Storefront Next</span>
+            <span class="chip">Page Designer</span>
+            <span class="chip">Market Street Blueprint</span>
+          </div>
+        </div>
+
+      </div><!-- /cards-grid -->
+    </div><!-- /tab-merch -->
+
+    <!-- ── DEVELOPER PANEL ── -->
+    <div class="tab-panel" id="tab-dev" role="tabpanel">
+      <p class="fold-sub">Modern, composable tooling to build faster, iterate freely, and ship with confidence.</p>
+      <div class="cards-grid">
+
+        <!-- Card 1 -->
+        <div class="fc" style="--ca: #2563EB">
+          <div class="fc-top">
+            <div class="fc-icon">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <polygon points="12 2 2 7 12 12 22 7 12 2"/>
+                <polyline points="2 17 12 22 22 17"/>
+                <polyline points="2 12 12 17 22 12"/>
+              </svg>
+            </div>
+            <span class="fc-year">2019 – 2021</span>
+          </div>
+          <div class="fc-title">Composable, API-First Foundation</div>
+          <div class="fc-desc">SCAPI replaced legacy OCAPI with a modern REST layer. PWA Kit delivers a React/TypeScript, open-source composable storefront that plugs into any headless CMS, search, or payments provider.</div>
+          <div class="chips">
+            <span class="chip">SCAPI</span>
+            <span class="chip">PWA Kit</span>
+            <span class="chip">React / TypeScript</span>
+            <span class="chip">Open source</span>
+          </div>
+        </div>
+
+        <!-- Card 2 -->
+        <div class="fc" style="--ca: #1D4ED8">
+          <div class="fc-top">
+            <div class="fc-icon">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" stroke="none">
+                <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/>
+              </svg>
+            </div>
+            <span class="fc-year">2026</span>
+          </div>
+          <div class="fc-title">Storefront Next — Live in 30 Minutes</div>
+          <div class="fc-desc">Production-ready React storefront with pre-built blueprints for PDP, PLP, Checkout, and My Account on Managed Runtime. Stand up in under 30 minutes. Included in every B2C SKU at no extra cost.</div>
+          <div class="chips">
+            <span class="chip">Storefront Next</span>
+            <span class="chip">Pre-built blueprints</span>
+            <span class="chip">Managed Runtime</span>
+          </div>
+        </div>
+
+        <!-- Card 3 -->
+        <div class="fc" style="--ca: #3B82F6">
+          <div class="fc-top">
+            <div class="fc-icon">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <polyline points="4 17 10 11 4 5"/>
+                <line x1="12" y1="19" x2="20" y2="19"/>
+              </svg>
+            </div>
+            <span class="fc-year">2026</span>
+          </div>
+          <div class="fc-title">Agentic Developer Toolkit</div>
+          <div class="fc-desc">Unified CLI, MCP server, VS Code extension, and Figma-to-React component generation. Full-spectrum debugging for controllers, custom hooks, and back-end jobs — with real-time typing for all B2C APIs.</div>
+          <div class="chips">
+            <span class="chip">Unified CLI</span>
+            <span class="chip">MCP Server</span>
+            <span class="chip">VS Code Extension</span>
+            <span class="chip">Figma → React</span>
+          </div>
+        </div>
+
+        <!-- Card 4 -->
+        <div class="fc" style="--ca: #2563EB">
+          <div class="fc-top">
+            <div class="fc-icon">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/>
+                <path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/>
+              </svg>
+            </div>
+            <span class="fc-year">2026</span>
+          </div>
+          <div class="fc-title">Native CRM Connection — Zero Code</div>
+          <div class="fc-desc">Pair B2C Commerce with Salesforce CRM in clicks, not custom code. Asynchronous Shopper Profile Sync creates unified Person Accounts, unlocking true Customer 360 across Service, Marketing, Loyalty, and POS — zero storefront performance impact.</div>
+          <div class="chips">
+            <span class="chip">Native CRM Connection</span>
+            <span class="chip">Zero code</span>
+            <span class="chip">Real-time sync</span>
+            <span class="chip">Customer 360</span>
+          </div>
+        </div>
+
+      </div><!-- /cards-grid -->
+    </div><!-- /tab-dev -->
+
+  </div><!-- /section-inner -->
+</section>
+
+<!-- ══════════════════ STATS ══════════════════ -->
+<section class="stats-section">
+  <div class="section-inner">
+    <p class="eyebrow">— Platform at scale, 2026</p>
+    <div class="stats-grid" style="margin-top:14px">
+      <div class="stat">
+        <div class="stat-num">50B+</div>
+        <div class="stat-desc">AI-powered product recommendations delivered annually</div>
+      </div>
+      <div class="stat">
+        <div class="stat-num">1.5B</div>
+        <div class="stat-desc">Unique shoppers served on the platform</div>
+      </div>
+      <div class="stat">
+        <div class="stat-num">20K+</div>
+        <div class="stat-desc">Orders processed per minute at peak</div>
+      </div>
+      <div class="stat">
+        <div class="stat-num">99.99%</div>
+        <div class="stat-desc">Historic uptime during Cyber Week</div>
+      </div>
+      <div class="stat">
+        <div class="stat-num">10×/yr</div>
+        <div class="stat-desc">Platform releases — continuous innovation cadence</div>
+      </div>
+      <div class="stat">
+        <div class="stat-num">8×</div>
+        <div class="stat-desc">Consecutive Gartner Magic Quadrant Leader</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════ FOOTER ══════════════════ -->
+<footer>
+  <p>Salesforce Agentforce Commerce Cloud — Platform Evolution 2016–2026</p>
+  <p>Data current as of June 2026</p>
+</footer>
+
+<script>
+/* ── Motion preference ── */
+const noMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+/* ── Tab switching ── */
+const tabBtns   = document.querySelectorAll('.tab-btn');
+const tabPanels = document.querySelectorAll('.tab-panel');
+
+tabBtns.forEach(btn => {
+  btn.addEventListener('click', () => {
+    tabBtns.forEach(b  => { b.classList.remove('active'); b.setAttribute('aria-selected','false'); });
+    tabPanels.forEach(p => p.classList.remove('active'));
+    btn.classList.add('active');
+    btn.setAttribute('aria-selected','true');
+    const panel = document.getElementById('tab-' + btn.dataset.tab);
+    panel.classList.add('active');
+    // Animate newly revealed cards
+    panel.querySelectorAll('.fc.sr:not(.visible)').forEach((fc, i) => {
+      setTimeout(() => fc.classList.add('visible'), i * 90);
+    });
+  });
+});
+
+/* ── Smooth scroll ── */
+document.querySelectorAll('a[href^="#"]').forEach(a => {
+  a.addEventListener('click', e => {
+    e.preventDefault();
+    const el = document.querySelector(a.getAttribute('href'));
+    if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  });
+});
+
+/* ── Scroll reveal: mark elements ── */
+[
+  ...document.querySelectorAll('.eyebrow'),
+  ...document.querySelectorAll('.section-title'),
+  ...document.querySelectorAll('.fold-sub'),
+  ...document.querySelectorAll('.compare-title-wrap'),
+].forEach(el => el.classList.add('sr'));
+
+// Stagger feature cards per grid
+document.querySelectorAll('.cards-grid').forEach(grid => {
+  grid.querySelectorAll('.fc').forEach((fc, i) => {
+    fc.classList.add('sr');
+    if (i > 0) fc.classList.add('sr-d' + Math.min(i, 4));
+  });
+});
+
+// Stagger stats
+document.querySelectorAll('.stats-grid .stat').forEach((s, i) => {
+  s.classList.add('sr');
+  if (i > 0) s.classList.add('sr-d' + Math.min(i, 4));
+});
+
+// Observer
+const revObs = new IntersectionObserver(entries => {
+  entries.forEach(e => {
+    if (e.isIntersecting) { e.target.classList.add('visible'); revObs.unobserve(e.target); }
+  });
+}, { threshold: 0.12 });
+document.querySelectorAll('.sr').forEach(el => revObs.observe(el));
+
+/* ── Comparison visual reveal ── */
+if (!noMotion) {
+  const cvLeft   = document.querySelector('.cv-left');
+  const cvAxis   = document.querySelector('.cv-axis');
+  const cvRight  = document.querySelector('.cv-right');
+  const cvVisual = document.querySelector('.compare-visual');
+
+  cvLeft.classList.add('cva');
+  cvAxis.classList.add('cva');
+  cvRight.classList.add('cva');
+  document.querySelectorAll('.cv-row').forEach(r => r.classList.add('cva-row'));
+
+  const cvObs = new IntersectionObserver(([entry]) => {
+    if (!entry.isIntersecting) return;
+    // Panels slide in
+    setTimeout(() => cvLeft.classList.add('visible'),   0);
+    setTimeout(() => cvRight.classList.add('visible'), 120);
+    setTimeout(() => cvAxis.classList.add('visible'),  300);
+    // Rows cascade after panels arrive
+    ['left', 'axis', 'right'].forEach((side, si) => {
+      document.querySelectorAll(`.cv-${side} .cv-row`).forEach((row, ri) => {
+        setTimeout(() => row.classList.add('visible'), 430 + si * 25 + ri * 85);
+      });
+    });
+    cvObs.disconnect();
+  }, { threshold: 0.15 });
+  cvObs.observe(cvVisual);
+}
+
+/* ── Linked row hover ── */
+const lRows = [...document.querySelectorAll('.cv-left  .cv-row')];
+const aRows = [...document.querySelectorAll('.cv-axis  .cv-row')];
+const rRows = [...document.querySelectorAll('.cv-right .cv-row')];
+
+function setHover(i, on) {
+  [lRows[i], aRows[i], rRows[i]].forEach(r => r && r.classList.toggle('row-hi', on));
+}
+[...lRows, ...rRows].forEach((row, fi) => {
+  const i = fi % lRows.length;
+  row.addEventListener('mouseenter', () => setHover(i, true));
+  row.addEventListener('mouseleave',  () => setHover(i, false));
+});
+
+/* ── Stats counter ── */
+function countUp(el) {
+  const orig = el.textContent.trim();
+  const m = orig.match(/^([\d.]+)(.*)/);
+  if (!m) return;
+  const target = parseFloat(m[1]);
+  const suffix = m[2];
+  const dec    = (m[1].split('.')[1] || '').length;
+  const dur    = 1400;
+  const t0     = performance.now();
+  (function tick(now) {
+    const p = Math.min((now - t0) / dur, 1);
+    const v = target * (1 - Math.pow(1 - p, 3)); // ease-out cubic
+    el.textContent = v.toFixed(dec) + suffix;
+    if (p < 1) requestAnimationFrame(tick);
+  })(performance.now());
+}
+
+const statObs = new IntersectionObserver(entries => {
+  entries.forEach(e => {
+    if (!e.isIntersecting) return;
+    if (!noMotion) countUp(e.target.querySelector('.stat-num'));
+    statObs.unobserve(e.target);
+  });
+}, { threshold: 0.5 });
+document.querySelectorAll('.stat').forEach(s => statObs.observe(s));
+</script>
+
+</body>
+</html>
