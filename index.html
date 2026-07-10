@@ -248,6 +248,104 @@ body {
   .chip { background: #F1F5F9; color: var(--ca, #64748B); border-color: rgba(0,0,0,0.08); }
 }
 
+/* ─────────────── CHALLENGE → SOLUTION ─────────────── */
+.challenge-section {
+  background: #0B1A3A;
+  border-top: 1px solid rgba(255,255,255,0.08);
+  border-bottom: 1px solid rgba(255,255,255,0.08);
+}
+.challenge-section .section-inner { padding-top: 72px; padding-bottom: 80px; }
+.challenge-section .eyebrow { color: rgba(255,255,255,0.55); }
+.challenge-section-title {
+  font-family: 'Outfit', sans-serif;
+  font-size: clamp(26px, 3.2vw, 40px); font-weight: 800;
+  color: #fff; line-height: 1.12; letter-spacing: -0.02em;
+  margin-bottom: 52px;
+}
+.challenge-section-title span {
+  background: linear-gradient(120deg, #5DDCFF 0%, #A5CEFF 100%);
+  -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+}
+.challenge-grid {
+  display: grid;
+  gap: 16px;
+}
+.challenge-pair {
+  display: grid;
+  grid-template-columns: 1fr 40px 1fr;
+  align-items: stretch;
+  gap: 0;
+  border-radius: 14px;
+  overflow: hidden;
+}
+.challenge-problem {
+  background: rgba(255,255,255,0.05);
+  border: 1px solid rgba(255,255,255,0.09);
+  border-right: none;
+  border-radius: 14px 0 0 14px;
+  padding: 28px 30px;
+}
+.challenge-label {
+  font-size: 10px; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase;
+  color: #F5A623; margin-bottom: 10px;
+}
+.challenge-headline {
+  font-family: 'Outfit', sans-serif;
+  font-size: 17px; font-weight: 700; color: rgba(255,255,255,0.90);
+  line-height: 1.3; margin-bottom: 10px;
+}
+.challenge-body {
+  font-size: 13.5px; color: rgba(255,255,255,0.58); line-height: 1.6;
+}
+.challenge-connector {
+  display: flex; align-items: center; justify-content: center;
+  background: rgba(255,255,255,0.04);
+  border-top: 1px solid rgba(255,255,255,0.09);
+  border-bottom: 1px solid rgba(255,255,255,0.09);
+  color: rgba(255,255,255,0.30); font-size: 18px;
+}
+.challenge-answer {
+  background: linear-gradient(135deg, #1040D5 0%, #0C3CC8 100%);
+  border: 1px solid rgba(255,255,255,0.15);
+  border-left: none;
+  border-radius: 0 14px 14px 0;
+  padding: 28px 30px;
+  position: relative; overflow: hidden;
+}
+.challenge-answer::before {
+  content: '';
+  position: absolute; top: -40px; right: -40px;
+  width: 140px; height: 140px;
+  background: radial-gradient(circle, rgba(93,220,255,0.15) 0%, transparent 70%);
+  pointer-events: none;
+}
+.answer-label {
+  font-size: 10px; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase;
+  color: rgba(93,220,255,0.85); margin-bottom: 10px;
+}
+.answer-headline {
+  font-family: 'Outfit', sans-serif;
+  font-size: 17px; font-weight: 700; color: #fff;
+  line-height: 1.3; margin-bottom: 10px;
+}
+.answer-body {
+  font-size: 13.5px; color: rgba(255,255,255,0.80); line-height: 1.6;
+}
+.answer-stat {
+  display: inline-block; margin-top: 12px;
+  font-family: 'Outfit', sans-serif; font-size: 22px; font-weight: 800;
+  background: linear-gradient(120deg, #5DDCFF 0%, #A5CEFF 100%);
+  -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+}
+.answer-stat-label { font-size: 12px; color: rgba(255,255,255,0.65); margin-top: 2px; }
+
+@media (max-width: 640px) {
+  .challenge-pair { grid-template-columns: 1fr; }
+  .challenge-problem { border-right: 1px solid rgba(255,255,255,0.09); border-bottom: none; border-radius: 14px 14px 0 0; }
+  .challenge-connector { padding: 10px; border-left: 1px solid rgba(255,255,255,0.09); border-right: 1px solid rgba(255,255,255,0.09); border-top: none; border-bottom: none; }
+  .challenge-answer { border-left: 1px solid rgba(255,255,255,0.15); border-top: none; border-radius: 0 0 14px 14px; }
+}
+
 /* ─────────────── COMPARISON VISUAL ─────────────── */
 .compare-section { background: var(--bg); }
 .compare-section .section-inner { padding-bottom: 80px; }
@@ -751,6 +849,7 @@ footer p { font-size: 14px; color: var(--ink-2); }
 <nav class="section-nav" id="sectionNav" aria-label="Page sections">
   <div class="section-nav-inner">
     <a href="#why-now"   class="snav-link">Why Now</a>
+    <a href="#challenge" class="snav-link">The Reality</a>
     <a href="#platform"  class="snav-link">Platform</a>
     <a href="#folds"     class="snav-link">For Your Team</a>
     <a href="#impact"    class="snav-link">Business Impact</a>
@@ -840,6 +939,84 @@ footer p { font-size: 14px; color: var(--ink-2); }
         <div class="why-text">in consumer spending projected to be mediated by AI agents by 2030</div>
         <div class="why-source">McKinsey</div>
       </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════ CHALLENGE → SOLUTION ══════════════════ -->
+<section id="challenge" class="challenge-section">
+  <div class="section-inner">
+    <p class="eyebrow">— The retailer reality</p>
+    <h2 class="challenge-section-title">The challenge facing premium retailers.<br><span>And exactly how we solve it.</span></h2>
+
+    <div class="challenge-grid">
+
+      <!-- Pair 1: Tech complexity / App sprawl -->
+      <div class="challenge-pair">
+        <div class="challenge-problem">
+          <div class="challenge-label">The Challenge</div>
+          <div class="challenge-headline">App sprawl is the hidden tax on growth</div>
+          <div class="challenge-body">The average enterprise retailer manages 15+ commerce integrations. Each one is a separate contract, a point of failure, and an engineering team keeping it alive — compounding cost and complexity at every layer of the stack.</div>
+        </div>
+        <div class="challenge-connector">→</div>
+        <div class="challenge-answer">
+          <div class="answer-label">Salesforce Answer</div>
+          <div class="answer-headline">Enterprise capabilities, out of the box</div>
+          <div class="answer-body">AI, payments, search, content management, personalisation, and order management — all native to the platform. No app-store dependency. No integration debt. One SLA, one roadmap, one team to call.</div>
+        </div>
+      </div>
+
+      <!-- Pair 2: Conversion stagnation / Agentic Commerce -->
+      <div class="challenge-pair">
+        <div class="challenge-problem">
+          <div class="challenge-label">The Challenge</div>
+          <div class="challenge-headline">Conversion rates have stalled for a decade</div>
+          <div class="challenge-body">Average e-commerce conversion sits at 2–3%. The overwhelming majority of shoppers browse, get lost, and leave — while generic recommendations serve the same product to everyone regardless of intent.</div>
+        </div>
+        <div class="challenge-connector">→</div>
+        <div class="challenge-answer">
+          <div class="answer-label">Salesforce Answer</div>
+          <div class="answer-headline">Agentforce guides every shopper, 1:1</div>
+          <div class="answer-body">Autonomous AI Shopping Agents understand intent and guide customers from discovery to checkout in natural language — 24/7, across every channel. Einstein AI personalises every touchpoint at scale.</div>
+          <div class="answer-stat">50B+</div>
+          <div class="answer-stat-label">personalised recommendations delivered annually</div>
+        </div>
+      </div>
+
+      <!-- Pair 3: Rising CAC / Loyalty & retention -->
+      <div class="challenge-pair">
+        <div class="challenge-problem">
+          <div class="challenge-label">The Challenge</div>
+          <div class="challenge-headline">Acquiring new customers costs 5× more than retaining them</div>
+          <div class="challenge-body">Customer acquisition costs have risen 60% in five years. One-size-fits-all promotions erode margin. Without deep personalisation, even loyal customers defect to experiences that feel made for them.</div>
+        </div>
+        <div class="challenge-connector">→</div>
+        <div class="challenge-answer">
+          <div class="answer-label">Salesforce Answer</div>
+          <div class="answer-headline">Turn every visit into a relationship</div>
+          <div class="answer-body">Unified customer data powers hyper-personalised journeys — product discovery, post-purchase engagement, and loyalty moments that feel individually crafted. Repeat purchase, not repeat acquisition spend.</div>
+          <div class="answer-stat">119%</div>
+          <div class="answer-stat-label">3-year ROI — Forrester Total Economic Impact study</div>
+        </div>
+      </div>
+
+      <!-- Pair 4: Peak reliability / TCO -->
+      <div class="challenge-pair">
+        <div class="challenge-problem">
+          <div class="challenge-label">The Challenge</div>
+          <div class="challenge-headline">Peak season downtime is not a risk — it's a guarantee</div>
+          <div class="challenge-body">Fragmented stacks mean fragmented resilience. When Black Friday traffic spikes, the weakest third-party link breaks. For a brand like Selfridges, a single hour of downtime during peak can mean millions in lost revenue and lasting reputational damage.</div>
+        </div>
+        <div class="challenge-connector">→</div>
+        <div class="challenge-answer">
+          <div class="answer-label">Salesforce Answer</div>
+          <div class="answer-headline">Enterprise-grade reliability, proven at scale</div>
+          <div class="answer-body">Salesforce B2C Commerce is built on Hyperforce — a multi-region, elastically scaled infrastructure trusted by the world's largest retailers. When your competitors go down, you stay up.</div>
+          <div class="answer-stat">100%</div>
+          <div class="answer-stat-label">uptime across all B2C Commerce customers, Holiday 2025</div>
+        </div>
+      </div>
+
     </div>
   </div>
 </section>
