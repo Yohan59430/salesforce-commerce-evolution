@@ -602,9 +602,161 @@ footer p { font-size: 14px; color: var(--ink-2); }
   .mini-node.tl-active .mini-dot { animation: none; }
   .tl-callout { transition: none; }
 }
+
+/* ─────────────── STICKY SECTION NAV ─────────────── */
+.section-nav {
+  position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+  background: rgba(255,255,255,0.94);
+  backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px);
+  border-bottom: 1px solid var(--border);
+  transform: translateY(-100%);
+  transition: transform 0.34s cubic-bezier(.22,1,.36,1);
+}
+.section-nav.show { transform: translateY(0); }
+.section-nav-inner {
+  max-width: 880px; margin: 0 auto; padding: 0 64px;
+  display: flex; align-items: center; gap: 2px; height: 48px;
+}
+.snav-link {
+  font-family: 'Outfit', sans-serif; font-size: 13px; font-weight: 600;
+  color: var(--ink-3); text-decoration: none;
+  padding: 6px 14px; border-radius: 6px;
+  transition: color 0.18s, background 0.18s; white-space: nowrap;
+}
+.snav-link:hover { color: var(--ink); background: var(--bg); }
+.snav-link.active { color: var(--dark); background: rgba(3,45,96,0.08); }
+@media (max-width: 700px) {
+  .section-nav-inner { padding: 0 12px; gap: 0; }
+  .snav-link { font-size: 11.5px; padding: 5px 9px; }
+}
+
+/* ─────────────── WHY NOW ─────────────── */
+.why-section {
+  background: linear-gradient(180deg, #021e45 0%, #041628 100%);
+  border-top: 1px solid rgba(255,255,255,0.06);
+}
+.why-inner { max-width: 880px; margin: 0 auto; padding: 52px 64px 60px; }
+.why-headline {
+  font-family: 'Outfit', sans-serif; font-size: 24px; font-weight: 800;
+  color: #fff; margin-bottom: 8px;
+}
+.why-sub { font-size: 15px; color: rgba(255,255,255,0.62); margin-bottom: 36px; max-width: 540px; line-height: 1.6; }
+.why-grid {
+  display: grid; grid-template-columns: repeat(3, 1fr);
+  gap: 1px; background: rgba(255,255,255,0.10);
+  border-radius: 12px; overflow: hidden;
+}
+.why-stat {
+  background: rgba(255,255,255,0.04); padding: 30px 26px;
+  transition: background 0.2s;
+}
+.why-stat:hover { background: rgba(255,255,255,0.07); }
+.why-num {
+  font-family: 'Outfit', sans-serif; font-size: 46px; font-weight: 900;
+  letter-spacing: -0.03em; line-height: 1;
+  background: linear-gradient(135deg, #7DD3FC 0%, #C4B5FD 100%);
+  -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+  background-clip: text; margin-bottom: 10px;
+}
+.why-text { font-size: 14px; color: rgba(255,255,255,0.78); line-height: 1.55; }
+.why-source {
+  font-family: 'JetBrains Mono', monospace; font-size: 9.5px;
+  color: rgba(255,255,255,0.30); letter-spacing: 0.08em;
+  margin-top: 10px; text-transform: uppercase;
+}
+@media (max-width: 700px) {
+  .why-inner { padding: 40px 24px; }
+  .why-grid { grid-template-columns: 1fr; }
+}
+
+/* ─────────────── BUSINESS IMPACT ─────────────── */
+.impact-section { background: var(--bg); }
+
+.impact-tabs {
+  display: flex; gap: 0; border-bottom: 2px solid var(--border);
+  margin-bottom: 40px; overflow-x: auto;
+  scrollbar-width: none; -ms-overflow-style: none;
+}
+.impact-tabs::-webkit-scrollbar { display: none; }
+.impact-tab-btn {
+  font-family: 'Outfit', sans-serif; font-size: 14px; font-weight: 600;
+  color: var(--ink-3); background: none; border: none; cursor: pointer;
+  padding: 11px 20px; margin-bottom: -2px; white-space: nowrap;
+  border-bottom: 2px solid transparent;
+  transition: color 0.18s, border-color 0.18s;
+  display: flex; align-items: center; gap: 8px;
+}
+.impact-tab-btn:hover { color: var(--ink); }
+.impact-tab-btn.active { color: var(--dark); border-bottom-color: var(--dark); }
+
+.impact-panel { display: none; }
+.impact-panel.active {
+  display: grid; grid-template-columns: 1fr 1.3fr; gap: 48px; align-items: start;
+  animation: fadeUp 0.36s cubic-bezier(.22,1,.36,1);
+}
+.impact-big-num {
+  font-family: 'Outfit', sans-serif; font-size: 76px; font-weight: 900;
+  letter-spacing: -0.04em; line-height: 1;
+  background: linear-gradient(135deg, #6D28D9, #2563EB);
+  -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+  background-clip: text; margin-bottom: 8px;
+}
+.impact-num-label {
+  font-size: 16px; color: var(--ink-2); font-weight: 500;
+  margin-bottom: 32px; line-height: 1.45;
+}
+.impact-proof {
+  background: var(--white); border-radius: 10px;
+  padding: 20px 22px; border-left: 3px solid var(--dark);
+}
+.impact-proof blockquote {
+  font-size: 13.5px; color: var(--ink-2); line-height: 1.65;
+  font-style: italic; margin-bottom: 10px;
+}
+.impact-proof-brand {
+  font-family: 'Outfit', sans-serif; font-size: 11.5px; font-weight: 700;
+  color: var(--ink-3); text-transform: uppercase; letter-spacing: 0.08em;
+}
+.impact-enablers-title {
+  font-family: 'JetBrains Mono', monospace; font-size: 10px;
+  font-weight: 500; color: var(--ink-3); text-transform: uppercase;
+  letter-spacing: 0.16em; margin-bottom: 16px;
+}
+.impact-enabler {
+  display: flex; gap: 14px; align-items: flex-start;
+  padding: 13px 0; border-top: 1px solid var(--border);
+}
+.impact-enabler:first-of-type { border-top: none; padding-top: 0; }
+.impact-dot {
+  width: 8px; height: 8px; border-radius: 50%;
+  background: var(--dark); flex-shrink: 0; margin-top: 7px;
+}
+.impact-enabler-text { font-size: 14px; color: var(--ink-2); line-height: 1.55; }
+.impact-enabler-text strong {
+  color: var(--ink); font-weight: 600; display: block; margin-bottom: 2px;
+}
+@media (max-width: 700px) {
+  .impact-panel.active { grid-template-columns: 1fr; gap: 32px; }
+  .impact-big-num { font-size: 56px; }
+  .impact-tab-btn { font-size: 12.5px; padding: 10px 13px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .impact-panel.active { animation: none; }
+}
 </style>
 </head>
 <body>
+
+<!-- ══════════════════ STICKY SECTION NAV ══════════════════ -->
+<nav class="section-nav" id="sectionNav" aria-label="Page sections">
+  <div class="section-nav-inner">
+    <a href="#why-now"   class="snav-link">Why Now</a>
+    <a href="#platform"  class="snav-link">Platform</a>
+    <a href="#folds"     class="snav-link">For Your Team</a>
+    <a href="#impact"    class="snav-link">Business Impact</a>
+    <a href="#customers" class="snav-link">Customers</a>
+  </div>
+</nav>
 
 <!-- ══════════════════ HERO ══════════════════ -->
 <header class="hero">
@@ -666,8 +818,34 @@ footer p { font-size: 14px; color: var(--ink-2); }
   </div>
 </header>
 
+<!-- ══════════════════ WHY NOW ══════════════════ -->
+<section id="why-now" class="why-section">
+  <div class="why-inner">
+    <p class="eyebrow" style="color:rgba(255,255,255,0.45)">— The Agentic Imperative</p>
+    <h2 class="why-headline sr">Your customers are already using AI</h2>
+    <p class="why-sub sr">The shift to agentic commerce isn't coming — it's already reshaping how consumers discover, evaluate, and buy. The window to act is now.</p>
+    <div class="why-grid">
+      <div class="why-stat sr">
+        <div class="why-num">55%</div>
+        <div class="why-text">of digital consumers now begin product research using LLM platforms</div>
+        <div class="why-source">Deloitte, 2026</div>
+      </div>
+      <div class="why-stat sr sr-d1">
+        <div class="why-num">63%</div>
+        <div class="why-text">of global retailers believe companies without AI agents will fall behind within two years</div>
+        <div class="why-source">Deloitte, 2026</div>
+      </div>
+      <div class="why-stat sr sr-d2">
+        <div class="why-num">$5T</div>
+        <div class="why-text">in consumer spending projected to be mediated by AI agents by 2030</div>
+        <div class="why-source">McKinsey</div>
+      </div>
+    </div>
+  </div>
+</section>
+
 <!-- ══════════════════ COMPARISON VISUAL ══════════════════ -->
-<section class="compare-section">
+<section id="platform" class="compare-section">
   <div class="section-inner">
 
     <div class="compare-title-wrap">
@@ -890,7 +1068,7 @@ footer p { font-size: 14px; color: var(--ink-2); }
           <div class="fc-desc">Einstein AI delivers over 50 billion personalised product recommendations annually — plug-and-play integrations with Adyen, Stripe, Avalara, and Contentstack without a line of custom code.</div>
           <div class="chips">
             <span class="chip">50B+ rec/yr</span>
-            <span class="chip">Clicks-not-code</span>
+            <span class="chip">Personalisation</span>
           </div>
         </div>
 
@@ -1012,41 +1190,194 @@ footer p { font-size: 14px; color: var(--ink-2); }
   </div><!-- /section-inner -->
 </section>
 
+<!-- ══════════════════ BUSINESS IMPACT ══════════════════ -->
+<section id="impact" class="impact-section">
+  <div class="section-inner">
+
+    <p class="eyebrow">— Powered by Agentforce</p>
+    <h2 class="section-title">Business Impact</h2>
+
+    <div class="impact-tabs" role="tablist">
+      <button class="impact-tab-btn active" data-impact="conversion" role="tab" aria-selected="true">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
+        Shopper Conversion
+      </button>
+      <button class="impact-tab-btn" data-impact="aov" role="tab" aria-selected="false">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="23 6 13.5 15.5 8.5 10.5 1 18"/><polyline points="17 6 23 6 23 12"/></svg>
+        Revenue Growth
+      </button>
+      <button class="impact-tab-btn" data-impact="efficiency" role="tab" aria-selected="false">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
+        Merchandiser Efficiency
+      </button>
+      <button class="impact-tab-btn" data-impact="selfservice" role="tab" aria-selected="false">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+        Self-Service
+      </button>
+    </div>
+
+    <!-- Tab: Shopper Conversion -->
+    <div class="impact-panel active" id="impact-conversion">
+      <div class="impact-left">
+        <div class="impact-big-num">32%</div>
+        <div class="impact-num-label">Average increase in shopper<br>conversion rate</div>
+        <div class="impact-proof">
+          <blockquote>"After implementing Agentforce Commerce, we saw a 32% increase in conversion rate — shoppers guided through discovery to checkout convert at a fundamentally higher rate."</blockquote>
+          <span class="impact-proof-brand">Cacau Show — Agentforce Commerce</span>
+        </div>
+      </div>
+      <div class="impact-right">
+        <div class="impact-enablers-title">Key enablers</div>
+        <div class="impact-enabler">
+          <div class="impact-dot"></div>
+          <div class="impact-enabler-text"><strong>Conversational Guided Shopping</strong>Uses natural language to guide shoppers from discovery to checkout 24/7, dramatically reducing cart abandonment.</div>
+        </div>
+        <div class="impact-enabler">
+          <div class="impact-dot"></div>
+          <div class="impact-enabler-text"><strong>AI-Powered Recommendations</strong>Einstein delivers 1:1 personalised product suggestions on PDPs, cart, category, and home pages — 50B+ annually.</div>
+        </div>
+        <div class="impact-enabler">
+          <div class="impact-dot"></div>
+          <div class="impact-enabler-text"><strong>Express Checkout</strong>Shoppers complete purchases directly within the chat experience using Apple Pay or Google Pay — zero friction.</div>
+        </div>
+        <div class="impact-enabler">
+          <div class="impact-dot"></div>
+          <div class="impact-enabler-text"><strong>Agentic Merchandising</strong>Automatically creates personalised, data-driven promotions to boost store performance without manual effort.</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Tab: Revenue Growth (AOV) -->
+    <div class="impact-panel" id="impact-aov">
+      <div class="impact-left">
+        <div class="impact-big-num">$150</div>
+        <div class="impact-num-label">Average increase in order value<br>with AI-guided shopping</div>
+        <div class="impact-proof">
+          <blockquote>"Customers using Shop the Store see a $100–$150 increase in average order value and convert at 3–4× the rate of standard online shoppers."</blockquote>
+          <span class="impact-proof-brand">Vince — Agentforce Commerce</span>
+        </div>
+      </div>
+      <div class="impact-right">
+        <div class="impact-enablers-title">Key enablers</div>
+        <div class="impact-enabler">
+          <div class="impact-dot"></div>
+          <div class="impact-enabler-text"><strong>Shopper Agent Upselling</strong>Replicates the in-store associate's ability to surface complementary or higher-value products through conversational context.</div>
+        </div>
+        <div class="impact-enabler">
+          <div class="impact-dot"></div>
+          <div class="impact-enabler-text"><strong>AI-Driven Cross-Sell</strong>Targeted recommendations drive increased revenue per order through dynamic follow-up questions and behavioural context.</div>
+        </div>
+        <div class="impact-enabler">
+          <div class="impact-dot"></div>
+          <div class="impact-enabler-text"><strong>200+ Promotion Types</strong>Tiered pricing structures and sophisticated campaign management maximise basket value at every stage of the funnel.</div>
+        </div>
+        <div class="impact-enabler">
+          <div class="impact-dot"></div>
+          <div class="impact-enabler-text"><strong>Data 360 Hyper-Personalisation</strong>Every interaction tailored to the shopper's history, preferences, and behaviour across channels for maximum relevance.</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Tab: Merchandiser Efficiency -->
+    <div class="impact-panel" id="impact-efficiency">
+      <div class="impact-left">
+        <div class="impact-big-num">88%</div>
+        <div class="impact-num-label">Reduction in time-to-task<br>with Merchant Agent</div>
+        <div class="impact-proof">
+          <blockquote>"Merchandisers see a 31% increase in productivity — AI handles catalog enrichment, product placement, and promotions so teams can focus on strategy, not manual tasks."</blockquote>
+          <span class="impact-proof-brand">Salesforce Customer Survey, 2026</span>
+        </div>
+      </div>
+      <div class="impact-right">
+        <div class="impact-enablers-title">Key enablers</div>
+        <div class="impact-enabler">
+          <div class="impact-dot"></div>
+          <div class="impact-enabler-text"><strong>Agentic Merchandising</strong>Automates catalog enrichment, product categorisation, boost &amp; bury rules, and promotional decisions at scale.</div>
+        </div>
+        <div class="impact-enabler">
+          <div class="impact-dot"></div>
+          <div class="impact-enabler-text"><strong>No-Code AI First Storefront Design</strong>Drag-and-drop Page Designer and plug-and-play Commerce Apps mean storefront changes in minutes, not sprint cycles.</div>
+        </div>
+        <div class="impact-enabler">
+          <div class="impact-dot"></div>
+          <div class="impact-enabler-text"><strong>Business Manager</strong>Customisable interface and intuitive content management eliminates the overhead of bespoke tooling.</div>
+        </div>
+        <div class="impact-enabler">
+          <div class="impact-dot"></div>
+          <div class="impact-enabler-text"><strong>30+ Built-In Reports</strong>Track product trends, customer lifetime value, at-risk buyers, and inventory — no separate BI layer required.</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Tab: Self-Service -->
+    <div class="impact-panel" id="impact-selfservice">
+      <div class="impact-left">
+        <div class="impact-big-num">60%</div>
+        <div class="impact-num-label">Case deflection rate achieved<br>with Shopper Agent</div>
+        <div class="impact-proof">
+          <blockquote>"Pandora's Agentforce agents deflect 60% of service cases while boosting Net Promoter Score by 10% — shoppers get instant answers without ever leaving the experience."</blockquote>
+          <span class="impact-proof-brand">Pandora — Agentforce Commerce</span>
+        </div>
+      </div>
+      <div class="impact-right">
+        <div class="impact-enablers-title">Key enablers</div>
+        <div class="impact-enabler">
+          <div class="impact-dot"></div>
+          <div class="impact-enabler-text"><strong>Shopper Agent</strong>Autonomously resolves WISMO, returns, and order inquiries — cutting response time from minutes to seconds, 24/7.</div>
+        </div>
+        <div class="impact-enabler">
+          <div class="impact-dot"></div>
+          <div class="impact-enabler-text"><strong>Self-Service Portal</strong>Shoppers track orders, initiate returns, and manage accounts directly on the storefront — no human agent required.</div>
+        </div>
+        <div class="impact-enabler">
+          <div class="impact-dot"></div>
+          <div class="impact-enabler-text"><strong>Unified Shopper Context via Data 360</strong>Full purchase history, loyalty status, and prior interactions surfaced instantly, eliminating manual cross-system lookup.</div>
+        </div>
+        <div class="impact-enabler">
+          <div class="impact-dot"></div>
+          <div class="impact-enabler-text"><strong>Proactive OMS Intelligence</strong>Agentforce for OMS detects order disruptions automatically and flags them before the customer ever contacts support.</div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
 <!-- ══════════════════ STATS ══════════════════ -->
 <section class="stats-section">
   <div class="section-inner">
-    <p class="eyebrow">— Platform at scale, 2026</p>
+    <p class="eyebrow">— Platform scale &amp; proven outcomes, 2026</p>
     <div class="stats-grid" style="margin-top:14px">
       <div class="stat">
         <div class="stat-num">50B+</div>
         <div class="stat-desc">AI-powered product recommendations delivered annually</div>
       </div>
       <div class="stat">
-        <div class="stat-num">1.5B</div>
-        <div class="stat-desc">Unique shoppers served on the platform</div>
+        <div class="stat-num">2B+</div>
+        <div class="stat-desc">Shoppers supported on the platform across 84 countries</div>
       </div>
       <div class="stat">
-        <div class="stat-num">20K+</div>
+        <div class="stat-num">27K+</div>
         <div class="stat-desc">Orders processed per minute at peak</div>
       </div>
       <div class="stat">
-        <div class="stat-num">99.99%</div>
-        <div class="stat-desc">Historic uptime during Cyber Week</div>
+        <div class="stat-num">119%</div>
+        <div class="stat-desc">3-year ROI delivered by Salesforce B2C Commerce — Forrester TEI</div>
       </div>
       <div class="stat">
-        <div class="stat-num">10×/yr</div>
-        <div class="stat-desc">Platform releases — continuous innovation cadence</div>
+        <div class="stat-num">24%</div>
+        <div class="stat-desc">Average decrease in Total Cost of Ownership</div>
       </div>
       <div class="stat">
-        <div class="stat-num">8×</div>
-        <div class="stat-desc">Consecutive Gartner Magic Quadrant Leader</div>
+        <div class="stat-num">10×</div>
+        <div class="stat-desc">Named Gartner Magic Quadrant Leader — 10 years in a row</div>
       </div>
     </div>
   </div>
 </section>
 
 <!-- ══════════════════ TRUSTED BY ══════════════════ -->
-<section class="trusted-section">
+<section id="customers" class="trusted-section">
   <p class="trusted-kicker sr">Trusted by luxury brands all over the world</p>
 
   <div class="marquee-rows">
@@ -1278,6 +1609,46 @@ document.querySelectorAll('.stat').forEach(s => statObs.observe(s));
   tlEl.addEventListener('mouseenter', () => clearInterval(timer));
   tlEl.addEventListener('mouseleave', () => { timer = setInterval(advance, 2800); });
 })();
+
+/* ── Sticky section nav ── */
+(function () {
+  const nav    = document.getElementById('sectionNav');
+  const hero   = document.querySelector('.hero');
+  const links  = [...nav.querySelectorAll('.snav-link')];
+  const sectionIds = ['why-now','platform','folds','impact','customers'];
+
+  // Show nav once hero bottom is scrolled past
+  const heroObs = new IntersectionObserver(([e]) => {
+    nav.classList.toggle('show', !e.isIntersecting);
+  }, { threshold: 0 });
+  heroObs.observe(hero);
+
+  // Highlight active section
+  const sectionEls = sectionIds.map(id => document.getElementById(id)).filter(Boolean);
+  const sectObs = new IntersectionObserver(entries => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        links.forEach(l => l.classList.remove('active'));
+        const active = links.find(l => l.getAttribute('href') === '#' + entry.target.id);
+        if (active) active.classList.add('active');
+      }
+    });
+  }, { rootMargin: '-40% 0px -55% 0px' });
+  sectionEls.forEach(el => sectObs.observe(el));
+})();
+
+/* ── Business Impact tabs ── */
+document.querySelectorAll('.impact-tab-btn').forEach(btn => {
+  btn.addEventListener('click', () => {
+    document.querySelectorAll('.impact-tab-btn').forEach(b => {
+      b.classList.remove('active'); b.setAttribute('aria-selected','false');
+    });
+    document.querySelectorAll('.impact-panel').forEach(p => p.classList.remove('active'));
+    btn.classList.add('active'); btn.setAttribute('aria-selected','true');
+    const panel = document.getElementById('impact-' + btn.dataset.impact);
+    if (panel) panel.classList.add('active');
+  });
+});
 </script>
 
 </body>
